@@ -1,6 +1,11 @@
-#include <iostream>
+#include "Game.h"
+#include "SfmlGUI.h"
+#include "maps/DuelMapGenerator.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    DuelMapGenerator mapGenerator;
+    Game game(new SfmlGUI, mapGenerator.generateMap());
+    game.loop();
+
     return 0;
 }
