@@ -2,7 +2,7 @@
 #define CIVILIZATION_V_BUILDING_H
 
 
-#include "../Renderable.h"
+#include "../gui/Renderable.h"
 
 class Building: public Renderable {
 

@@ -4,10 +4,10 @@ Cell::Cell(Cell::Type type): type(type) {
 
 }
 
-void Cell::render(GUI *gui) {
+void Cell::render(Batch batch) {
     for (Building* b : buildings)
-        b->render(gui);
+        b->render(batch);
 
     for (Unit* u : units)
-        u->render(gui);
+        u->render(batch);
 }

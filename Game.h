@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "maps/Map.h"
+#include "gui/Batch.h"
+#include "gui/BatchGUI.h"
 
 class GUI;
 
@@ -10,8 +12,6 @@ class Game {
 private:
     GUI* gui;
     Map* map;
-    bool pressed = false;
-    int x = 0, y = 0;
 
 public:
     Game(GUI* gui, Map* map);

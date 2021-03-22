@@ -1,9 +1,9 @@
 #ifndef CIVILIZATION_V_CELL_H
 #define CIVILIZATION_V_CELL_H
 
-#include "Renderable.h"
-#include "units/Unit.h"
-#include "buildings/Building.h"
+#include "../gui/Renderable.h"
+#include "../units/Unit.h"
+#include "../buildings/Building.h"
 #include <vector>
 
 class Cell: public Renderable {
@@ -23,7 +23,7 @@ public:
     Type type;
 
     Cell(Type type);
-    void render(GUI* gui) override;
+    void render(Batch batch) override;
 };
 
 

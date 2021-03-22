@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "GUI.h"
-#include "Game.h"
+#include "../Game.h"
 
 class SfmlGUI: public GUI {
 private:

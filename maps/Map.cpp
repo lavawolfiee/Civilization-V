@@ -1,6 +1,6 @@
 #include "Map.h"
 
-void Map::render(GUI *gui) {
+void Map::render(Batch batch) {
     const double hexagonSize = 100;
     for (int i = 0; i < field.size(); ++i) {
         for (int j = 0; j < field.at(i).size(); ++j) {
@@ -22,7 +22,7 @@ void Map::render(GUI *gui) {
                     c = Color(255, 238, 88);
                     break;
             }
-            gui->fillHexagon(j * (hexagonSize * sqrt(3) / 2.0) + (i % 2) * hexagonSize * sqrt(3) / 4.0,
+            batch.fillHexagon(j * (hexagonSize * sqrt(3) / 2.0) + (i % 2) * hexagonSize * sqrt(3) / 4.0,
                              i * hexagonSize * 3 / 4, hexagonSize / 2, c,
                              1, Color(0, 0, 0, 255));
         }

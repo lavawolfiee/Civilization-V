@@ -1,13 +1,17 @@
 #include "Game.h"
-#include "GUI.h"
+#include "gui/GUI.h"
+#include <iostream>
 
 void Game::loop() {
+    double x = 0, y = 0;
     while (gui->isOpen()) {
         gui->pollEvents();
         gui->clear({129, 212, 250});
-        map->render(gui);
+        map->render(new BatchGUI(gui, x, y));
         // gui->fillHexagon(x, y, 100, Color("red"), 3);
         gui->display();
+        x += 0.1;
+        y += 0.2;
     }
 }
 
@@ -16,16 +20,10 @@ Game::Game(GUI *gui, Map* map): gui(gui), map(map) {
 }
 
 void Game::onMousePressed(int x, int y) {
-    pressed = true;
 }
 
 void Game::onMouseReleased(int x, int y) {
-    pressed = false;
 }
 
 void Game::onMouseMoved(int x, int y) {
-    if (pressed) {
-        this->x = x;
-        this->y = y;
-    }
 }

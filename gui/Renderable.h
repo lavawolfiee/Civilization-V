@@ -2,10 +2,11 @@
 #define CIVILIZATION_V_RENDERABLE_H
 
 #include "GUI.h"
+#include "Batch.h"
 
 class Renderable {
 public:
-    virtual void render(GUI* gui) = 0;
+    virtual void render(Batch batch) = 0;
 };
 
 

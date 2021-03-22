@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "SfmlGUI.h"
+#include "gui/SfmlGUI.h"
 #include "maps/DuelMapGenerator.h"
 
 int main() {

@@ -3,8 +3,8 @@
 
 
 #include <vector>
-#include "../Cell.h"
-#include "../Renderable.h"
+#include "Cell.h"
+#include "../gui/Renderable.h"
 #include <cmath>
 
 class Map: public Renderable {
@@ -13,7 +13,7 @@ protected:
 
 public:
     const std::vector<std::vector<Cell>>& getField() const { return field; }
-    void render(GUI* gui) override;
+    void render(Batch batch) override;
 };
 
 #endif //CIVILIZATION_V_MAP_H
