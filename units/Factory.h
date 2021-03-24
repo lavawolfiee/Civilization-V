@@ -1,7 +1,7 @@
 #ifndef CIVILIZATION_V_FACTORY_H
 #define CIVILIZATION_V_FACTORY_H
 
-#include "Unit.h"
+#include "AncientUnits.h"
 
 class UnitFactory {
 public:

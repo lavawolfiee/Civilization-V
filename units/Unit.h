@@ -45,7 +45,6 @@ public:
         BattleUnit(maxHealth, strength, movePoints, attackRange),
         strengthRange(strengthRange)
     {};
-    void render(Batch batch) override;
 };
 
 class MeleeUnit: public BattleUnit {
@@ -53,7 +52,6 @@ public:
     MeleeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
             BattleUnit(maxHealth, strength, movePoints, attackRange)
     {};
-    void render(Batch batch) override;
 };
 
 class CavalryUnit: public BattleUnit {
@@ -61,13 +59,11 @@ public:
     CavalryUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
             BattleUnit(maxHealth, strength, movePoints, attackRange)
     {};
-    void render(Batch batch) override;
 };
 
 class WorkerUnit: public Unit {
 public:
     explicit WorkerUnit(unsigned int movePoints) : Unit(movePoints) {};
-    void render(Batch batch) override;
 };
 
 #endif //CIVILIZATION_V_UNIT_H
