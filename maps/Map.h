@@ -5,6 +5,7 @@
 #include <vector>
 #include "Cell.h"
 #include "../gui/Renderable.h"
+#include "../units/Factory.h"
 #include <cmath>
 
 class Map: public Renderable {

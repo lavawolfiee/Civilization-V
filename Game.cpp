@@ -10,8 +10,8 @@ void Game::loop() {
         map->render(new BatchGUI(gui, x, y));
         // gui->fillHexagon(x, y, 100, Color("red"), 3);
         gui->display();
-        x += 0.1;
-        y += 0.2;
+//        x += 0.1;
+//        y += 0.2;
     }
 }
 

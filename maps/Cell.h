@@ -23,8 +23,8 @@ public:
     Type type;
 
     Cell(Type type);
+    void setUnit(Unit* unit);
     void render(Batch batch) override;
 };
-
 
 #endif //CIVILIZATION_V_CELL_H

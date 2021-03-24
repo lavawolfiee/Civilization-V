@@ -1,9 +1,12 @@
 #include "Map.h"
 
+
+//TODO: need to replace render of cells in cell.h
+//TODO: Тёма е***ь пожалуйста ПЕРЕНЕСИ!!!
 void Map::render(Batch batch) {
     const double hexagonSize = 100;
-    for (int i = 0; i < field.size(); ++i) {
-        for (int j = 0; j < field.at(i).size(); ++j) {
+    for (size_t i = 0; i < field.size(); ++i) {
+        for (size_t j = 0; j < field.at(i).size(); ++j) {
             Color c;
             switch (field.at(i).at(j).type) {
                 case Cell::WATER:
@@ -23,8 +26,18 @@ void Map::render(Batch batch) {
                     break;
             }
             batch.fillHexagon(j * (hexagonSize * sqrt(3) / 2.0) + (i % 2) * hexagonSize * sqrt(3) / 4.0,
-                             i * hexagonSize * 3 / 4, hexagonSize / 2, c,
-                             1, Color(0, 0, 0, 255));
+                              i * hexagonSize * 3 / 4, hexagonSize / 2, c,
+                              1, Color(0, 0, 0, 255));
+        }
+    }
+#ifdef debug
+    cout << "[OK]. Drew map" << endl;
+#endif
+    for (size_t i = 0; i < field.size(); ++i) {
+        for (size_t j = 0; j < field.at(i).size(); ++j) {
+            Cell& curCell = field[i][j];
+            curCell.render(Batch(&batch, j * (hexagonSize * sqrt(3) / 2.0) + (i % 2) * hexagonSize * sqrt(3) / 4.0,
+                                 i * hexagonSize * 3 / 4));
         }
     }
 }
