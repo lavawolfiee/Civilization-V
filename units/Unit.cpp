@@ -7,7 +7,7 @@ void Unit::setCell(Cell* newCell) {
 }
 
 void RangeUnit::render(Batch batch) {
-    batch.fillCircle(25, 25, 25, Color(125, 50, 125), 2);
+    // batch.fillCircle(25, 25, 25, Color(200, 50, 200), 2);
 #ifdef debug
     cout << "[OK]. Drew Range Unit" << endl;
 #endif

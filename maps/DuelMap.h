@@ -3,8 +3,15 @@
 
 
 #include "Map.h"
+#include <cstdlib>
+#include <ctime>
+#include <set>
+#include <tuple>
 
 class DuelMap: public Map {
+private:
+    static void generate_deposit(const std::vector<std::vector<Cell>>& field, double probability);
+
 public:
     DuelMap();
 };

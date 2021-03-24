@@ -3,7 +3,7 @@
 
 #include "Color.h"
 
-//TODO: АНТОН ПРОСНИСЬ Б***Ь!!
+// TODO: АНТОН ПРОСНИСЬ Б***Ь!!
 class Batch {
 protected:
     Batch* batch;

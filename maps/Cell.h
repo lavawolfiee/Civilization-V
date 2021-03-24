@@ -12,6 +12,8 @@ private:
     std::vector<Unit*> units;
 
 public:
+    constexpr const static double SIZE = 50;
+
     enum Type {
         PLAIN,
         HILL,
