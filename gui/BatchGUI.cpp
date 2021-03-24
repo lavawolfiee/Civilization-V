@@ -14,3 +14,8 @@ void BatchGUI::fillHexagon(double x, double y, double radius, Color color, doubl
     if(!gui) return;
     gui->fillHexagon(offsetX + x, offsetY + y, radius, color, borderWidth, borderColor);
 }
+
+void BatchGUI::fillTriangle(double x, double y, double a, Color color, double borderWidth, Color borderColor) const {
+    if (!gui) return;
+    gui->fillTriangle(offsetX + x, offsetY + y, a, color, borderWidth, borderColor);
+}

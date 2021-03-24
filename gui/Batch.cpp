@@ -12,3 +12,8 @@ void Batch::fillHexagon(double x, double y, double radius, Color color, double b
     if(!batch) return;
     batch->fillHexagon(offsetX + x, offsetY + y, radius, color, borderWidth, borderColor);
 }
+
+void Batch::fillTriangle(double x, double y, double a, Color color, double borderWidth, Color borderColor) const {
+    if (!batch) return;
+    batch->fillTriangle(offsetX + x, offsetY + y, a, color, borderWidth, borderColor);
+}

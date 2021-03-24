@@ -12,6 +12,12 @@ class Game {
 private:
     GUI* gui;
     Map* map;
+    unsigned long long delta;
+
+    double mapX, mapY;
+    int mouseX, mouseY;
+    bool mousePressed;
+    int pressX, pressY;
 
 public:
     Game(GUI* gui, Map* map);
@@ -21,6 +27,7 @@ public:
     void onMousePressed(int x, int y);
     void onMouseReleased(int x, int y);
     void onMouseMoved(int x, int y);
+    void onMouseClicked(int x, int y);
 };
 
 

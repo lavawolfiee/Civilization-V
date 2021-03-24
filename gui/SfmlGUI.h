@@ -6,10 +6,13 @@
 #include "../Game.h"
 
 class SfmlGUI: public GUI {
+public:
+    unsigned int _width;
+    unsigned int _height;
+
 private:
-    unsigned int width;
-    unsigned int height;
     sf::RenderWindow window;
+    sf::Clock clock;
 
 public:
     SfmlGUI();
@@ -21,8 +24,11 @@ public:
                     Color borderColor = Color("black")) override;
     void fillHexagon(double x, double y, double r, Color c, double borderWidth = 0,
                      Color borderColor = Color("black")) override;
+    void fillTriangle(double x, double y, double a, Color c, double borderWidth = 0,
+                     Color borderColor = Color("black")) override;
 
     void pollEvents() override;
+    unsigned long long delta() override;
 };
 
 
