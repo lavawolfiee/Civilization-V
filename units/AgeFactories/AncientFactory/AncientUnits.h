@@ -1,7 +1,7 @@
 #ifndef CIVILIZATION_V_ANCIENTUNITS_H
 #define CIVILIZATION_V_ANCIENTUNITS_H
 
-#include "Unit.h"
+#include "../../Unit.h"
 
 class AncientRangeUnit: public RangeUnit {
 public:
