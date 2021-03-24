@@ -155,3 +155,81 @@ Unit* ClassicalUnitFactory::createSettler() const {
 #endif
     return currentUnit;
 }
+
+Unit* IndustrialUnitFactory::createUnit(UnitType unitType) const {
+#ifdef debug
+    cout << "[OK]. Doin Industrial Unit" << endl;
+#endif
+    switch (unitType) {
+        case RANGE:
+            return createRange();
+        case MELEE:
+            return createMelee();
+        case CAVALRY:
+            return createCavalry();
+        case WORKER:
+            return createWorker();
+        case SETTLER:
+            return createSettler();
+        default:
+#ifdef debug
+            cout << "[FAILED]. Bad Unit type" << endl;
+#endif
+            exit(0);
+    }
+}
+
+Unit* IndustrialUnitFactory::createRange() const {
+#ifdef debug
+    cout << "[OK]. Doin Industrial Range" << endl;
+#endif
+    RangeUnit* currentUnit = new IndustrialRangeUnit(70, 20, 4, 5, 50);
+#ifdef debug
+    cout << "[OK]. Done new Industrial Range: 70hp, 5ar, 4mp, 50str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* IndustrialUnitFactory::createMelee() const {
+#ifdef debug
+    cout << "[OK]. Doin Industrial Melee" << endl;
+#endif
+    MeleeUnit* currentUnit = new IndustrialMeleeUnit(110, 45, 3, 1);
+#ifdef debug
+    cout << "[OK]. Done new Industrial Melee: 110hp, 1ar, 3mp, 45str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* IndustrialUnitFactory::createCavalry() const {
+#ifdef debug
+    cout << "[OK]. Doin Industrial Cavalry" << endl;
+#endif
+    CavalryUnit* currentUnit = new IndustrialCavalryUnit(80, 70, 10, 1);
+#ifdef debug
+    cout << "[OK]. Done new Industrial Cavalry: 80hp, 1ar, 10mp, 70str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* IndustrialUnitFactory::createWorker() const {
+#ifdef debug
+    cout << "Doin Industrial Worker. [OK]" << endl;
+#endif
+    WorkerUnit* currentUnit = new IndustrialWorkerUnit(3);
+#ifdef debug
+    cout << "Done new Industrial Worker: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* IndustrialUnitFactory::createSettler() const {
+#ifdef debug
+    cout << "Doin Industrial Settler. [OK]" << endl;
+#endif
+    SettlerUnit* currentUnit = new IndustrialSettlerUnit(3);
+#ifdef debug
+    cout << "Done new Industrial Settler: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}

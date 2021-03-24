@@ -3,6 +3,7 @@
 
 #include "AgeFactories/AncientFactory/AncientUnits.h"
 #include "AgeFactories/ClassicalFactory/ClassicalUnits.h"
+#include "AgeFactories/IndustrialFactory/IndustrialUnits.h"
 #include "Unit.h"
 
 class UnitFactory {
@@ -30,6 +31,18 @@ public:
 };
 
 class ClassicalUnitFactory: public UnitFactory {
+private:
+    Unit* createMelee() const;
+    Unit* createRange() const;
+    Unit* createCavalry() const;
+    Unit* createWorker() const;
+    Unit* createSettler() const;
+public:
+
+    Unit* createUnit(UnitType unitType) const;
+};
+
+class IndustrialUnitFactory: public UnitFactory {
 private:
     Unit* createMelee() const;
     Unit* createRange() const;
