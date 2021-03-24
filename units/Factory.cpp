@@ -1,5 +1,8 @@
 #include "Factory.h"
 
+//TODO: Balance unit's stats. Can be doing in the late development stage
+
+//----------=ANCIENT-FACTORY=----------
 Unit* AncientUnitFactory::createUnit(UnitType unitType) const {
 #ifdef debug
     cout << "[OK]. Doin Ancient Unit" << endl;
@@ -78,6 +81,9 @@ Unit* AncientUnitFactory::createSettler() const {
     return currentUnit;
 }
 
+//END--------=ANCIENT-FACTORY=----------
+
+//----------=CLASSICAL-FACTORY=----------
 Unit* ClassicalUnitFactory::createUnit(UnitType unitType) const {
 #ifdef debug
     cout << "[OK]. Doin Classical Unit" << endl;
@@ -156,6 +162,9 @@ Unit* ClassicalUnitFactory::createSettler() const {
     return currentUnit;
 }
 
+//END--------=CLASSICAL-FACTORY=----------
+
+//----------=INDUSTRIAL-FACTORY=----------
 Unit* IndustrialUnitFactory::createUnit(UnitType unitType) const {
 #ifdef debug
     cout << "[OK]. Doin Industrial Unit" << endl;
@@ -233,3 +242,85 @@ Unit* IndustrialUnitFactory::createSettler() const {
 #endif
     return currentUnit;
 }
+
+//END-------=INDUSTRIAL-FACTORY=----------
+
+//------------=MODERN-FACTORY=------------
+Unit* ModernUnitFactory::createUnit(UnitType unitType) const {
+#ifdef debug
+    cout << "[OK]. Doin Modern Unit" << endl;
+#endif
+    switch (unitType) {
+        case RANGE:
+            return createRange();
+        case MELEE:
+            return createMelee();
+        case CAVALRY:
+            return createCavalry();
+        case WORKER:
+            return createWorker();
+        case SETTLER:
+            return createSettler();
+        default:
+#ifdef debug
+            cout << "[FAILED]. Bad Unit type" << endl;
+#endif
+            exit(0);
+    }
+}
+
+Unit* ModernUnitFactory::createRange() const {
+#ifdef debug
+    cout << "[OK]. Doin Modern Range" << endl;
+#endif
+    RangeUnit* currentUnit = new ModernRangeUnit(100, 35, 4, 6, 80);
+#ifdef debug
+    cout << "[OK]. Done new Modern Range: 100hp, 6ar, 4mp, 80str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ModernUnitFactory::createMelee() const {
+#ifdef debug
+    cout << "[OK]. Doin Modern Melee" << endl;
+#endif
+    MeleeUnit* currentUnit = new ModernMeleeUnit(150, 60, 3, 1);
+#ifdef debug
+    cout << "[OK]. Done new Modern Melee: 150hp, 1ar, 3mp, 60str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ModernUnitFactory::createCavalry() const {
+#ifdef debug
+    cout << "[OK]. Doin Modern Cavalry" << endl;
+#endif
+    CavalryUnit* currentUnit = new ModernCavalryUnit(110, 80, 12, 1);
+#ifdef debug
+    cout << "[OK]. Done new Modern Cavalry: 110hp, 1ar, 12mp, 80str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ModernUnitFactory::createWorker() const {
+#ifdef debug
+    cout << "Doin Modern Worker. [OK]" << endl;
+#endif
+    WorkerUnit* currentUnit = new ModernWorkerUnit(3);
+#ifdef debug
+    cout << "Done new Modern Worker: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ModernUnitFactory::createSettler() const {
+#ifdef debug
+    cout << "Doin Modern Settler. [OK]" << endl;
+#endif
+    SettlerUnit* currentUnit = new ModernSettlerUnit(3);
+#ifdef debug
+    cout << "Done new Modern Settler: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}
+//END---------=MODERN-FACTORY=--------
