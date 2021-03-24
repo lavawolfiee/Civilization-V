@@ -28,3 +28,10 @@ void AncientWorkerUnit::render(Batch batch) {
     cout << "[OK]. Drew Ancient Worker Unit" << endl;
 #endif
 }
+
+void AncientSettlerUnit::render(Batch batch) {
+    batch.fillCircle(Cell::SIZE / 4, Cell::SIZE / 4, Cell::SIZE / 4, Color(250, 128, 114), 2);
+#ifdef debug
+    cout << "[OK]. Drew Ancient Settler Unit" << endl;
+#endif
+}

@@ -37,6 +37,13 @@ protected:
     {};
 };
 
+class PieceUnit: public Unit {
+protected:
+    explicit PieceUnit(unsigned int movePoints) :
+        Unit(movePoints)
+    {};
+};
+
 class RangeUnit: public BattleUnit {
 private:
     unsigned int strengthRange;
@@ -61,9 +68,14 @@ public:
     {};
 };
 
-class WorkerUnit: public Unit {
+class WorkerUnit: public PieceUnit {
 public:
-    explicit WorkerUnit(unsigned int movePoints) : Unit(movePoints) {};
+    explicit WorkerUnit(unsigned int movePoints) : PieceUnit(movePoints) {};
+};
+
+class SettlerUnit: public PieceUnit {
+public:
+    explicit SettlerUnit(unsigned int movePoints) : PieceUnit(movePoints) {};
 };
 
 #endif //CIVILIZATION_V_UNIT_H

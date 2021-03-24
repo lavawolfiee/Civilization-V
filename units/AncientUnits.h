@@ -33,4 +33,10 @@ public:
     void render(Batch batch) override;
 };
 
+class AncientSettlerUnit: public SettlerUnit {
+public:
+    explicit  AncientSettlerUnit(unsigned int movePoints) : SettlerUnit(movePoints) {};
+    void render(Batch batch) override;
+};
+
 #endif //CIVILIZATION_V_ANCIENTUNITS_H

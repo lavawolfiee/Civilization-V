@@ -9,7 +9,8 @@ public:
         RANGE,
         MELEE,
         CAVALRY,
-        WORKER
+        WORKER,
+        SETTLER
     };
     virtual Unit* createUnit(UnitType unitType) const = 0;
 };
@@ -20,6 +21,7 @@ private:
     Unit* createRange() const;
     Unit* createCavalry() const;
     Unit* createWorker() const;
+    Unit* createSettler() const;
 public:
 
     Unit* createUnit(UnitType unitType) const;

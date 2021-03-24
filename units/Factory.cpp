@@ -13,6 +13,8 @@ Unit* AncientUnitFactory::createUnit(UnitType unitType) const {
             return createCavalry();
         case WORKER:
             return createWorker();
+        case SETTLER:
+            return createSettler();
         default:
 #ifdef debug
     cout << "[FAILED]. Bad Unit type" << endl;
@@ -61,6 +63,17 @@ Unit* AncientUnitFactory::createWorker() const {
     WorkerUnit* currentUnit = new AncientWorkerUnit(3);
 #ifdef debug
     cout << "Done new Ancient Worker: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* AncientUnitFactory::createSettler() const {
+#ifdef debug
+    cout << "Doin Ancient Settler. [OK]" << endl;
+#endif
+    SettlerUnit* currentUnit = new AncientSettlerUnit(3);
+#ifdef debug
+    cout << "Done new Ancient Settler: 3mp. [OK]" << endl;
 #endif
     return currentUnit;
 }
