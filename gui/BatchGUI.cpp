@@ -1,21 +1,21 @@
 #include "BatchGUI.h"
 #include <iostream>
 
-BatchGUI::BatchGUI(GUI *gui, double offsetX, double offsetY, double rotation) : gui(gui),
-                                                                                Batch(nullptr, offsetX, offsetY,
+BatchGUI::BatchGUI(GUI *gui, double offsetX, double offsetY, double scale, double rotation) : gui(gui),
+                                                                                Batch(nullptr, offsetX, offsetY, scale,
                                                                                       rotation) {};
 
 void BatchGUI::fillCircle(double x, double y, double radius, Color color, double borderWidth, Color borderColor) const {
     if(!gui) return;
-    gui->fillCircle(offsetX + x, offsetY + y, radius, color, borderWidth, borderColor);
+    gui->fillCircle(offsetX + x * scale, offsetY + y * scale, radius * scale, color, borderWidth, borderColor);
 }
 
 void BatchGUI::fillHexagon(double x, double y, double radius, Color color, double borderWidth, Color borderColor) const {
     if(!gui) return;
-    gui->fillHexagon(offsetX + x, offsetY + y, radius, color, borderWidth, borderColor);
+    gui->fillHexagon(offsetX + x * scale, offsetY + y * scale, radius * scale, color, borderWidth, borderColor);
 }
 
 void BatchGUI::fillTriangle(double x, double y, double a, Color color, double borderWidth, Color borderColor) const {
     if (!gui) return;
-    gui->fillTriangle(offsetX + x, offsetY + y, a, color, borderWidth, borderColor);
+    gui->fillTriangle(offsetX + x * scale, offsetY + y * scale, a * scale, color, borderWidth, borderColor);
 }

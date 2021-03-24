@@ -18,6 +18,7 @@ private:
     int mouseX, mouseY;
     bool mousePressed;
     int pressX, pressY;
+    double zoom;
 
 public:
     Game(GUI* gui, Map* map);
@@ -28,6 +29,7 @@ public:
     void onMouseReleased(int x, int y);
     void onMouseMoved(int x, int y);
     void onMouseClicked(int x, int y);
+    void onMouseWheelScrolled(double scrollDelta);
 };
 
 

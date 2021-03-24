@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "gui/GUI.h"
+#include <cmath>
+
 #include <iostream>
 
 void Game::loop() {
@@ -20,12 +22,13 @@ void Game::loop() {
             mapY -= cameraVelocity * static_cast<double>(delta) / 1'000'000;
 
         gui->clear({129, 212, 250});
-        map->render(new BatchGUI(gui, mapX, mapY));
+        double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
+        map->render(new Batch(new Batch(new BatchGUI(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5: tanh(zoom) / 2) + 1), -x, -y));
         gui->display();
     }
 }
 
-Game::Game(GUI *gui, Map* map): gui(gui), map(map), delta(0), mapX(0.0), mapY(0.0), mouseX(gui->width / 2),
+Game::Game(GUI *gui, Map* map): gui(gui), map(map), delta(0), mapX(0.0), mapY(0.0), mouseX(gui->width / 2), zoom(0.0),
                                 mouseY(gui->height / 2), mousePressed(false), pressX(0), pressY(0) {
     gui->setGame(this);
 }
@@ -52,4 +55,9 @@ void Game::onMouseMoved(int x, int y) {
 
 void Game::onMouseClicked(int x, int y) {
 
+}
+
+void Game::onMouseWheelScrolled(double scrollDelta) {
+    zoom += scrollDelta / 4;
+    zoom = fmin(5.0, fmax(-5.0, zoom));
 }

@@ -58,6 +58,9 @@ void SfmlGUI::pollEvents() {
             case sf::Event::Closed:
                 window.close();
                 break;
+            case sf::Event::MouseWheelScrolled:
+                if(event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+                    game->onMouseWheelScrolled(event.mouseWheelScroll.delta);
         }
     }
 }
