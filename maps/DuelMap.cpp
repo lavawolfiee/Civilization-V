@@ -5,22 +5,26 @@ DuelMap::DuelMap() {
 
     int width = 42;
     int height = 27;
-    field = std::vector<std::vector<Cell>>(height, std::vector<Cell>(width, Cell::PLAIN));
+    field = std::vector<std::vector<Cell>>(height, std::vector<Cell>(width, Cell::WATER));
 
-    for (int i = 0; i < 4; ++i)
-        generate_deposit(field, Cell::WATER, 0.65, 0.01);
+    for (int i = 0; i < 4;)
+        if (generate_deposit(field, Cell::PLAIN, 0.55, 0.01))
+            ++i;
 
-    for (int i = 0; i < 3; ++i)
-        generate_deposit(field, Cell::MOUNTAIN, 0.5, 0.1);
+    for (int i = 0; i < 3;)
+        if (generate_deposit(field, Cell::MOUNTAIN, 0.2, 0.1))
+            ++i;
 
-    for (int i = 0; i < 15; ++i)
-        generate_deposit(field, Cell::HILL, 0.3, 0.5);
+    for (int i = 0; i < 15;)
+        if (generate_deposit(field, Cell::HILL, 0.3, 0.75))
+            ++i;
 
-    for (int i = 0; i < 2; ++i)
-        generate_deposit(field, Cell::DESERT, 0.6, 0.05);
+    for (int i = 0; i < 2;)
+        if (generate_deposit(field, Cell::DESERT, 0.6, 0.1))
+            ++i;
 }
 
-void DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type type, double probability,
+bool DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type type, double probability,
                                double dist_coef) {
     int height = field.size();
     int width = field.at(0).size();
@@ -29,7 +33,15 @@ void DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type
     };
 
     std::queue<std::tuple<int, int, int>> queue;
-    queue.push({rand() % width, rand() % height, 0});
+    int rand_x = rand() % width;
+    int rand_y = rand() % height;
+
+    if (field.at(rand_y).at(rand_x).type == type)
+        return false;
+    if (type != Cell::PLAIN && field.at(rand_y).at(rand_x).type != Cell::PLAIN)
+        return false;
+
+    queue.push({rand_x, rand_y, 0});
 
     while (!queue.empty()) {
         int x, y, depth;
@@ -38,14 +50,24 @@ void DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type
 
         if (field.at(y).at(x).type != type) {
             field.at(y).at(x) = Cell(type);
-            int dirs[4][2] = {{1,  0},
-                              {0,  1},
-                              {-1, 0},
-                              {0,  -1}};
+            std::vector<std::pair<int, int>> dirs = {{1,  0},
+                                                     {-1, 0},
+                                                     {0,  1},
+                                                     {0,  -1},
+                                                     {-1, 1},
+                                                     {-1, -1}};
 
-            for (auto & dir : dirs) {
-                int nx = x + dir[0];
-                int ny = y + dir[1];
+            if (y % 2 != 0)
+                dirs = {{1,  0},
+                        {-1, 0},
+                        {0,  1},
+                        {0,  -1},
+                        {1, 1},
+                        {1, -1}};
+
+            for (auto &dir : dirs) {
+                int nx = x + dir.first;
+                int ny = y + dir.second;
 
                 if (nx >= 0 && ny >= 0 && nx < width && ny < height && field.at(ny).at(nx).type != type) {
                     double p = probability * f(depth);
@@ -57,4 +79,6 @@ void DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type
             }
         }
     }
+
+    return true;
 }

@@ -74,5 +74,5 @@ void SfmlGUI::fillTriangle(double x, double y, double a, Color c, double borderW
 }
 
 unsigned long long SfmlGUI::delta() {
-    return clock.restart().asMilliseconds();
+    return clock.restart().asMicroseconds();
 }
