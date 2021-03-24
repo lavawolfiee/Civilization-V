@@ -77,3 +77,81 @@ Unit* AncientUnitFactory::createSettler() const {
 #endif
     return currentUnit;
 }
+
+Unit* ClassicalUnitFactory::createUnit(UnitType unitType) const {
+#ifdef debug
+    cout << "[OK]. Doin Classical Unit" << endl;
+#endif
+    switch (unitType) {
+        case RANGE:
+            return createRange();
+        case MELEE:
+            return createMelee();
+        case CAVALRY:
+            return createCavalry();
+        case WORKER:
+            return createWorker();
+        case SETTLER:
+            return createSettler();
+        default:
+#ifdef debug
+            cout << "[FAILED]. Bad Unit type" << endl;
+#endif
+            exit(0);
+    }
+}
+
+Unit* ClassicalUnitFactory::createRange() const {
+#ifdef debug
+    cout << "[OK]. Doin Classical Range" << endl;
+#endif
+    RangeUnit* currentUnit = new ClassicalRangeUnit(50, 10, 4, 3, 30);
+#ifdef debug
+    cout << "[OK]. Done new Classical Range: 50hp, 3ar, 4mp, 30str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ClassicalUnitFactory::createMelee() const {
+#ifdef debug
+    cout << "[OK]. Doin Classical Melee" << endl;
+#endif
+    MeleeUnit* currentUnit = new ClassicalMeleeUnit(80, 25, 3, 1);
+#ifdef debug
+    cout << "[OK]. Done new Classical Melee: 80hp, 1ar, 3mp, 25str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ClassicalUnitFactory::createCavalry() const {
+#ifdef debug
+    cout << "[OK]. Doin Classical Cavalry" << endl;
+#endif
+    CavalryUnit* currentUnit = new ClassicalCavalryUnit(60, 30, 8, 1);
+#ifdef debug
+    cout << "[OK]. Done new Classical Cavalry: 60hp, 1ar, 8mp, 30str" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ClassicalUnitFactory::createWorker() const {
+#ifdef debug
+    cout << "Doin Classical Worker. [OK]" << endl;
+#endif
+    WorkerUnit* currentUnit = new ClassicalWorkerUnit(3);
+#ifdef debug
+    cout << "Done new Classical Worker: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}
+
+Unit* ClassicalUnitFactory::createSettler() const {
+#ifdef debug
+    cout << "Doin Classical Settler. [OK]" << endl;
+#endif
+    SettlerUnit* currentUnit = new ClassicalSettlerUnit(3);
+#ifdef debug
+    cout << "Done new Classical Settler: 3mp. [OK]" << endl;
+#endif
+    return currentUnit;
+}

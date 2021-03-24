@@ -2,6 +2,8 @@
 #define CIVILIZATION_V_FACTORY_H
 
 #include "AgeFactories/AncientFactory/AncientUnits.h"
+#include "AgeFactories/ClassicalFactory/ClassicalUnits.h"
+#include "Unit.h"
 
 class UnitFactory {
 public:
@@ -16,6 +18,18 @@ public:
 };
 
 class AncientUnitFactory: public UnitFactory {
+private:
+    Unit* createMelee() const;
+    Unit* createRange() const;
+    Unit* createCavalry() const;
+    Unit* createWorker() const;
+    Unit* createSettler() const;
+public:
+
+    Unit* createUnit(UnitType unitType) const;
+};
+
+class ClassicalUnitFactory: public UnitFactory {
 private:
     Unit* createMelee() const;
     Unit* createRange() const;
