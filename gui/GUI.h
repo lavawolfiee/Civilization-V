@@ -3,16 +3,21 @@
 
 #include "Color.h"
 #include <vector>
+#include "Mouse.h"
 
 class Game;
 
 class GUI {
 protected:
-    Game* game;
+    Game* game = nullptr;
 
 public:
-    unsigned int width;
-    unsigned int height;
+    int width = 0;
+    int height = 0;
+
+    Mouse mouse;
+
+    GUI();
 
     virtual void display() = 0;
     virtual void clear(Color c = Color("black")) = 0;

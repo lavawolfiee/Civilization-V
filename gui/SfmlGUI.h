@@ -6,12 +6,8 @@
 #include "../Game.h"
 
 class SfmlGUI: public GUI {
-public:
-    unsigned int _width;
-    unsigned int _height;
-
 private:
-    sf::RenderWindow window;
+    sf::RenderWindow* window;
     sf::Clock clock;
 
 public:

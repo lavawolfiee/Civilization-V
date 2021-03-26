@@ -15,9 +15,6 @@ private:
     unsigned long long delta;
 
     double mapX, mapY;
-    int mouseX, mouseY;
-    bool mousePressed;
-    int pressX, pressY;
     double zoom;
 
 public:
