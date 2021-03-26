@@ -3,6 +3,7 @@
 #include <cmath>
 
 void Game::loop() {
+
     double cameraVelocity = 500;
     gui->delta();
     while (gui->isOpen()) {
@@ -22,7 +23,7 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        map->render(new Batch(new Batch(new BatchGUI(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5: tanh(zoom) / 2) + 1), -x, -y));
+        map->render(new Batch(new Batch(new BatchGUI(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5 : tanh(zoom) * (1.0 - 1.0 / 8.0)) + 1), -x, -y));
         gui->display();
     }
 }

@@ -1,27 +1,35 @@
 #include "DuelMap.h"
+#include "noise/Noise.h"
+
+#include <iostream>
 
 DuelMap::DuelMap() {
     srand(time(nullptr));
 
-    int width = 42;
-    int height = 27;
+    int width = 56;
+    int height = 36;
     field = std::vector<std::vector<Cell>>(height, std::vector<Cell>(width, Cell::WATER));
 
-    for (int i = 0; i < 4;)
-        if (generate_deposit(field, Cell::PLAIN, 0.55, 0.01))
-            ++i;
+    Noise surface = Noise::noiseGenerator(anl::EFractalTypes::MULTI, anl::EBasisTypes::SIMPLEX, anl::EInterpTypes::QUINTIC, 6, 1);
+    Noise desert = Noise::noiseGenerator(anl::EFractalTypes::MULTI, anl::EBasisTypes::SIMPLEX, anl::EInterpTypes::QUINTIC, 6, 2);
 
-    for (int i = 0; i < 3;)
-        if (generate_deposit(field, Cell::MOUNTAIN, 0.2, 0.1))
-            ++i;
+    std::vector<Cell::Type> types = {Cell::DEEPWATER, Cell::WATER, Cell::PLAIN};
+    std::vector<double> bounds = {0.3, 0.4, 1.0};
 
-    for (int i = 0; i < 15;)
-        if (generate_deposit(field, Cell::HILL, 0.3, 0.75))
-            ++i;
+    std::vector< std::vector< double > > surfacePixels = surface.generateNoise(width, height, 25);
+    std::vector< std::vector< double > > desertPixels = desert.generateNoise(width, height, 25);
+    for(long long y = 0; y < height; ++y) {
+        for(long long x = 0; x < width; ++x) {
+            Cell::Type type;
+            long long i = 0;
+            for (; i < bounds.size() && surfacePixels[y][x] > bounds[i]; ++i);
+            type = types[i];
 
-    for (int i = 0; i < 2;)
-        if (generate_deposit(field, Cell::DESERT, 0.6, 0.1))
-            ++i;
+            if(desertPixels[y][x] > 0.45 && type == Cell::PLAIN) type = Cell::DESERT;
+
+            field.at(y).at(x) = Cell(type);
+        }
+    }
 }
 
 bool DuelMap::generate_deposit(std::vector<std::vector<Cell>> &field, Cell::Type type, double probability,
