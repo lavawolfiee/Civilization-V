@@ -8,17 +8,18 @@
 
 class GUI;
 
-class Game {
+class Game: public std::enable_shared_from_this<Game> {
 private:
-    GUI* gui;
-    Map* map;
+    std::shared_ptr<GUI> gui;
+    std::shared_ptr<Map> map;
     unsigned long long delta;
 
     double mapX, mapY;
     double zoom;
 
 public:
-    Game(GUI* gui, Map* map);
+    Game();
+    ~Game();
 
     void loop();
 
@@ -27,6 +28,9 @@ public:
     void onMouseMoved(int x, int y);
     void onMouseClicked(int x, int y);
     void onMouseWheelScrolled(double scrollDelta);
+
+    void setGUI(std::shared_ptr<GUI> gui);
+    void setMap(std::shared_ptr<Map> map);
 };
 
 

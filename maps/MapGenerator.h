@@ -6,7 +6,7 @@
 
 class MapGenerator {
 public:
-    virtual Map* generateMap() = 0;
+    virtual std::shared_ptr<Map> generateMap() = 0;
 };
 
 

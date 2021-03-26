@@ -1,7 +1,8 @@
 #include "BatchGUI.h"
 #include <iostream>
+#include <utility>
 
-BatchGUI::BatchGUI(GUI *gui, double offsetX, double offsetY, double scale, double rotation) : gui(gui),
+BatchGUI::BatchGUI(std::shared_ptr<GUI> gui, double offsetX, double offsetY, double scale, double rotation) : gui(std::move(gui)),
                                                                                 Batch(nullptr, offsetX, offsetY, scale,
                                                                                       rotation) {};
 

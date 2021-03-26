@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "gui/GUI.h"
 #include <cmath>
+#include <memory>
+#include <utility>
 
 void Game::loop() {
     double cameraVelocity = 500;
@@ -22,13 +24,13 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        map->render(new Batch(new Batch(new BatchGUI(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5: tanh(zoom) / 2) + 1), -x, -y));
+        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5: tanh(zoom) / 2) + 1), -x, -y));
         gui->display();
     }
 }
 
-Game::Game(GUI *gui, Map* map): gui(gui), map(map), delta(0), mapX(0.0), mapY(0.0), zoom(0.0) {
-    gui->setGame(this);
+Game::Game(): delta(0), mapX(0.0), mapY(0.0), zoom(0.0) {
+
 }
 
 void Game::onMousePressed(int x, int y) {}
@@ -43,3 +45,14 @@ void Game::onMouseWheelScrolled(double scrollDelta) {
     zoom += scrollDelta / 4;
     zoom = fmin(5.0, fmax(-5.0, zoom));
 }
+
+void Game::setGUI(std::shared_ptr<GUI> gui) {
+    this->gui = std::move(gui);
+    this->gui->setGame(shared_from_this());
+}
+
+void Game::setMap(std::shared_ptr<Map> map) {
+    this->map = std::move(map);
+}
+
+Game::~Game() = default;

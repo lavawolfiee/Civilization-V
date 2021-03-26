@@ -15,11 +15,11 @@ class Cell;
 
 class Unit: public Renderable {
 protected:
-    Cell* currentCell;
+    std::weak_ptr<Cell> currentCell;
     unsigned int movePoints;
-    explicit Unit(unsigned int movePoints) : movePoints(movePoints), currentCell(nullptr) {};
+    explicit Unit(unsigned int movePoints) : movePoints(movePoints) {};
 public:
-    void setCell(Cell* newCell);
+    void setCell(std::weak_ptr<Cell> newCell);
 };
 
 class BattleUnit: public Unit {

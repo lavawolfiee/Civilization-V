@@ -7,7 +7,7 @@
 
 class DuelMapGenerator: public MapGenerator {
 public:
-    Map* generateMap() override;
+    std::shared_ptr<Map> generateMap() override;
 };
 
 

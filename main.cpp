@@ -11,11 +11,13 @@ using std::endl;
 
 signed main() {
 #ifdef debug
-    cout << "[OK]. Ну че ебанный рот - погнали нахуй!" << std::endl;
+    cout << "[OK]. Ну че [CENSORED] рот - погнали [CENSORED]!" << std::endl;
 #endif
     DuelMapGenerator mapGenerator;
-    Game game(new SfmlGUI, mapGenerator.generateMap());
-    game.loop();
+    std::shared_ptr<Game> game = std::make_shared<Game>();
+    game->setGUI(std::make_shared<SfmlGUI>());
+    game->setMap(mapGenerator.generateMap());
+    game->loop();
 
     return 0;
 }

@@ -6,7 +6,7 @@
 
 class Renderable {
 public:
-    virtual void render(Batch batch) = 0;
+    virtual void render(std::shared_ptr<Batch> batch) = 0;
 };
 
 

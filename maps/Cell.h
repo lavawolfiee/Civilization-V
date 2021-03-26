@@ -6,10 +6,10 @@
 #include "../buildings/Building.h"
 #include <vector>
 
-class Cell: public Renderable {
+class Cell: public Renderable, public std::enable_shared_from_this<Cell> {
 private:
-    std::vector<Building*> buildings;
-    std::vector<Unit*> units;
+    std::shared_ptr<Building> building;
+    std::shared_ptr<Unit> unit;
 
 public:
     constexpr const static double SIZE = 50;
@@ -25,8 +25,10 @@ public:
     Type type;
 
     Cell(Type type);
-    void setUnit(Unit* unit);
-    void render(Batch batch) override;
+    ~Cell();
+
+    void setUnit(std::shared_ptr<Unit> unit);
+    void render(std::shared_ptr<Batch> batch) override;
 };
 
 #endif //CIVILIZATION_V_CELL_H

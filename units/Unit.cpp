@@ -1,7 +1,6 @@
-//TODO: Make different classes of ages units and add renders for them
-
 #include "Unit.h"
+#include <utility>
 
-void Unit::setCell(Cell* newCell) {
-    currentCell = newCell;
+void Unit::setCell(std::weak_ptr<Cell> newCell) {
+    currentCell = std::move(newCell);
 }

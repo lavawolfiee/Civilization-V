@@ -14,7 +14,7 @@ SfmlGUI::SfmlGUI(): window(nullptr) {
     height = sf::VideoMode::getDesktopMode().height;
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    window = new sf::RenderWindow(sf::VideoMode(width, height), "Civilization_V",
+    window = std::make_shared<sf::RenderWindow>(sf::VideoMode(width, height), "Civilization_V",
                                   sf::Style::Fullscreen, settings);
 }
 
@@ -51,33 +51,34 @@ void SfmlGUI::pollEvents() {
                     mouse.pressed = true;
                     mouse.pressX = event.mouseButton.x;
                     mouse.pressX = event.mouseButton.y;
-                    game->onMousePressed(event.mouseButton.x, event.mouseButton.y);
+                    game.lock()->onMousePressed(event.mouseButton.x, event.mouseButton.y);
                 }
                 break;
             case sf::Event::MouseButtonReleased:
                 if (event.mouseButton.button == sf::Mouse::Left) {
+                    auto game_ptr = game.lock();
                     bool wasPressed = mouse.pressed;
                     mouse.x = event.mouseButton.x;
                     mouse.y = event.mouseButton.y;
                     mouse.pressed = false;
-                    game->onMouseReleased(event.mouseButton.x, event.mouseButton.y);
+                    game_ptr->onMouseReleased(event.mouseButton.x, event.mouseButton.y);
 
                     if (wasPressed && mouse.pressX == mouse.x && mouse.pressY == mouse.y) {
-                        game->onMouseClicked(mouse.x, mouse.y);
+                        game_ptr->onMouseClicked(mouse.x, mouse.y);
                     }
                 }
                 break;
             case sf::Event::MouseMoved:
                 mouse.x = event.mouseMove.x;
                 mouse.y = event.mouseMove.y;
-                game->onMouseMoved(event.mouseMove.x, event.mouseMove.y);
+                game.lock()->onMouseMoved(event.mouseMove.x, event.mouseMove.y);
                 break;
             case sf::Event::Closed:
                 window->close();
                 break;
             case sf::Event::MouseWheelScrolled:
                 if(event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
-                    game->onMouseWheelScrolled(event.mouseWheelScroll.delta);
+                    game.lock()->onMouseWheelScrolled(event.mouseWheelScroll.delta);
                 break;
         }
     }
@@ -97,3 +98,5 @@ void SfmlGUI::fillTriangle(double x, double y, double a, Color c, double borderW
 unsigned long long SfmlGUI::delta() {
     return clock.restart().asMicroseconds();
 }
+
+SfmlGUI::~SfmlGUI() = default;

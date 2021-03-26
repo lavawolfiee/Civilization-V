@@ -7,11 +7,12 @@
 
 class SfmlGUI: public GUI {
 private:
-    sf::RenderWindow* window;
+    std::shared_ptr<sf::RenderWindow> window;
     sf::Clock clock;
 
 public:
     SfmlGUI();
+    ~SfmlGUI() override;
 
     void display() override;
     void clear(Color c) override;

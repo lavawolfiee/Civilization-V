@@ -16,55 +16,55 @@ public:
         WORKER,
         SETTLER
     };
-    virtual Unit* createUnit(UnitType unitType) const = 0;
+    virtual std::shared_ptr<Unit> createUnit(UnitType unitType) const = 0;
 };
 
 class AncientUnitFactory: public UnitFactory {
 private:
-    Unit* createMelee() const;
-    Unit* createRange() const;
-    Unit* createCavalry() const;
-    Unit* createWorker() const;
-    Unit* createSettler() const;
+    std::shared_ptr<Unit> createMelee() const;
+    std::shared_ptr<Unit> createRange() const;
+    std::shared_ptr<Unit> createCavalry() const;
+    std::shared_ptr<Unit> createWorker() const;
+    std::shared_ptr<Unit> createSettler() const;
 public:
 
-    Unit* createUnit(UnitType unitType) const;
+    std::shared_ptr<Unit> createUnit(UnitType unitType) const;
 };
 
 class ClassicalUnitFactory: public UnitFactory {
 private:
-    Unit* createMelee() const;
-    Unit* createRange() const;
-    Unit* createCavalry() const;
-    Unit* createWorker() const;
-    Unit* createSettler() const;
+    std::shared_ptr<Unit> createMelee() const;
+    std::shared_ptr<Unit> createRange() const;
+    std::shared_ptr<Unit> createCavalry() const;
+    std::shared_ptr<Unit> createWorker() const;
+    std::shared_ptr<Unit> createSettler() const;
 public:
 
-    Unit* createUnit(UnitType unitType) const;
+    std::shared_ptr<Unit> createUnit(UnitType unitType) const;
 };
 
 class IndustrialUnitFactory: public UnitFactory {
 private:
-    Unit* createMelee() const;
-    Unit* createRange() const;
-    Unit* createCavalry() const;
-    Unit* createWorker() const;
-    Unit* createSettler() const;
+    std::shared_ptr<Unit> createMelee() const;
+    std::shared_ptr<Unit> createRange() const;
+    std::shared_ptr<Unit> createCavalry() const;
+    std::shared_ptr<Unit> createWorker() const;
+    std::shared_ptr<Unit> createSettler() const;
 public:
 
-    Unit* createUnit(UnitType unitType) const;
+    std::shared_ptr<Unit> createUnit(UnitType unitType) const;
 };
 
 class ModernUnitFactory: public UnitFactory {
 private:
-    Unit* createMelee() const;
-    Unit* createRange() const;
-    Unit* createCavalry() const;
-    Unit* createWorker() const;
-    Unit* createSettler() const;
+    std::shared_ptr<Unit> createMelee() const;
+    std::shared_ptr<Unit> createRange() const;
+    std::shared_ptr<Unit> createCavalry() const;
+    std::shared_ptr<Unit> createWorker() const;
+    std::shared_ptr<Unit> createSettler() const;
 public:
 
-    Unit* createUnit(UnitType unitType) const;
+    std::shared_ptr<Unit> createUnit(UnitType unitType) const;
 };
 
 #endif //CIVILIZATION_V_FACTORY_H

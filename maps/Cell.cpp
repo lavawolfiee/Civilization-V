@@ -4,12 +4,12 @@ Cell::Cell(Cell::Type type): type(type) {
 
 }
 
-void Cell::setUnit(Unit *unit) {
-    units.push_back(unit);
-    unit->setCell(this);
+void Cell::setUnit(std::shared_ptr<Unit> unit) {
+    this->unit = std::move(unit);
+    this->unit->setCell(shared_from_this());
 }
 
-void Cell::render(Batch batch) {
+void Cell::render(std::shared_ptr<Batch> batch) {
     Color c;
     switch (type) {
         case Cell::WATER:
@@ -29,11 +29,14 @@ void Cell::render(Batch batch) {
             break;
     }
 
-    batch.fillHexagon(0, 0, SIZE / 2, c,
+    batch->fillHexagon(0, 0, SIZE / 2, c,
                       1, Color(0, 0, 0, 255));
-    for (Building* b : buildings)
-        b->render(batch);
 
-    for (Unit* u : units)
-        u->render(batch);
+    if (building)
+        building->render(batch);
+
+    if (unit)
+        unit->render(batch);
 }
+
+Cell::~Cell() = default;

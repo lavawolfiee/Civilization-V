@@ -14,7 +14,7 @@ protected:
 
 public:
     const std::vector<std::vector<Cell>>& getField() const { return field; }
-    void render(Batch batch) override;
+    void render(std::shared_ptr<Batch> batch) override;
 };
 
 #endif //CIVILIZATION_V_MAP_H

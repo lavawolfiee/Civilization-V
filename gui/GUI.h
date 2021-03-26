@@ -3,13 +3,14 @@
 
 #include "Color.h"
 #include <vector>
+#include <memory>
 #include "Mouse.h"
 
 class Game;
 
 class GUI {
 protected:
-    Game* game = nullptr;
+    std::weak_ptr<Game> game;
 
 public:
     int width = 0;
@@ -18,6 +19,7 @@ public:
     Mouse mouse;
 
     GUI();
+    virtual ~GUI();
 
     virtual void display() = 0;
     virtual void clear(Color c = Color("black")) = 0;
@@ -30,7 +32,7 @@ public:
                              Color borderColor = Color("black")) = 0;
 
     virtual void pollEvents() = 0;
-    virtual void setGame(Game* game);
+    virtual void setGame(std::weak_ptr<Game> game);
     virtual unsigned long long delta() = 0;
 };
 
