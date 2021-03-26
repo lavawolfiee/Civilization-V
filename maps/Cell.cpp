@@ -12,8 +12,11 @@ void Cell::setUnit(std::shared_ptr<Unit> unit) {
 void Cell::render(std::shared_ptr<Batch> batch) {
     Color c;
     switch (type) {
-        case Cell::WATER:
+        case Cell::DEEPWATER:
             c = Color(13, 71, 161);
+            break;
+        case Cell::WATER:
+            c = Color(0, 188, 212);
             break;
         case Cell::PLAIN:
             c = Color(139, 195, 74);

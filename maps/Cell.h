@@ -18,6 +18,7 @@ public:
         PLAIN,
         HILL,
         MOUNTAIN,
+        DEEPWATER,
         WATER,
         DESERT
     };

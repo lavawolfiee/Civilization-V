@@ -5,6 +5,7 @@
 #include <utility>
 
 void Game::loop() {
+
     double cameraVelocity = 500;
     gui->delta();
     while (gui->isOpen()) {
