@@ -3,14 +3,14 @@
 #include <utility>
 
 Noise Noise::noiseGenerator(anl::EFractalTypes type, anl::EBasisTypes basisType, anl::EInterpTypes interpType,
-                            long long int numOctaves, double frequency) {
+                            long long int numOctaves, double frequency, unsigned int seed) {
 
     srand(time(nullptr));
 
     Noise result(new anl::CImplicitFractal(type, basisType, interpType));
     result.noise->setNumOctaves(numOctaves);
     result.noise->setFrequency(frequency);
-    result.noise->setSeed(rand());
+    result.noise->setSeed(seed);
     return result;
 }
 

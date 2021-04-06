@@ -42,4 +42,10 @@ void Cell::render(std::shared_ptr<Batch> batch) {
         unit->render(batch);
 }
 
+Cell::Cell(const Cell &cell) {
+    type = cell.type;
+    building = std::move(cell.building);
+    unit = std::move(cell.unit);
+}
+
 Cell::~Cell() = default;

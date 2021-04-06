@@ -10,7 +10,7 @@ void Game::loop() {
     gui->delta();
     while (gui->isOpen()) {
         delta = gui->delta();
-        const Mouse& mouse = gui->mouse;
+        const Mouse &mouse = gui->mouse;
         gui->pollEvents();
 
         if (mouse.x <= 0.025 * gui->width)
@@ -25,12 +25,14 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, (zoom >= 1.0 ? tanh(zoom) * 1.5: tanh(zoom) / 2) + 1), -x, -y));
+        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y,
+                                                                    (zoom >= 0.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) +
+                                                                    1), -x, -y));
         gui->display();
     }
 }
 
-Game::Game(): delta(0), mapX(0.0), mapY(0.0), zoom(0.0) {
+Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0) {
 
 }
 

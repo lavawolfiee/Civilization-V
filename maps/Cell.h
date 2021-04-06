@@ -26,6 +26,7 @@ public:
     Type type;
 
     Cell(Type type);
+    Cell(const Cell& cell);
     ~Cell();
 
     void setUnit(std::shared_ptr<Unit> unit);
