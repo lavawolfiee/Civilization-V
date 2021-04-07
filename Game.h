@@ -5,6 +5,9 @@
 #include "maps/Map.h"
 #include "gui/Batch.h"
 #include "gui/BatchGUI.h"
+#include "Player.h"
+
+#include <iostream>
 
 class GUI;
 
@@ -16,6 +19,9 @@ private:
 
     double mapX, mapY;
     double zoom;
+
+    std::vector< std::shared_ptr< Player > > players;
+    unsigned int turn;
 
 public:
     Game();
@@ -31,6 +37,8 @@ public:
 
     void setGUI(std::shared_ptr<GUI> gui);
     void setMap(std::shared_ptr<Map> map);
+
+    void nextTurn();
 };
 
 
