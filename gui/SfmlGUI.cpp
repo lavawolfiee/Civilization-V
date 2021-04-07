@@ -68,34 +68,37 @@ void SfmlGUI::pollEvents() {
                     mouse.pressed = true;
                     mouse.pressX = event.mouseButton.x;
                     mouse.pressX = event.mouseButton.y;
-                    game.lock()->onMousePressed(event.mouseButton.x, event.mouseButton.y);
+                    if (mousePressedListener)
+                        mousePressedListener(event.mouseButton.x, event.mouseButton.y);
                 }
                 break;
             case sf::Event::MouseButtonReleased:
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    auto game_ptr = game.lock();
                     bool wasPressed = mouse.pressed;
                     mouse.x = event.mouseButton.x;
                     mouse.y = event.mouseButton.y;
                     mouse.pressed = false;
-                    game_ptr->onMouseReleased(event.mouseButton.x, event.mouseButton.y);
+                    if (mouseReleasedListener)
+                        mouseReleasedListener(event.mouseButton.x, event.mouseButton.y);
 
                     if (wasPressed && mouse.pressX == mouse.x && mouse.pressY == mouse.y) {
-                        game_ptr->onMouseClicked(mouse.x, mouse.y);
+                        mouseClickedListener(mouse.x, mouse.y);
                     }
                 }
                 break;
             case sf::Event::MouseMoved:
                 mouse.x = event.mouseMove.x;
                 mouse.y = event.mouseMove.y;
-                game.lock()->onMouseMoved(event.mouseMove.x, event.mouseMove.y);
+                if (mouseMovedListener)
+                    mouseMovedListener(event.mouseMove.x, event.mouseMove.y);
                 break;
             case sf::Event::Closed:
                 window.close();
                 break;
             case sf::Event::MouseWheelScrolled:
                 if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
-                    game.lock()->onMouseWheelScrolled(event.mouseWheelScroll.delta);
+                    if (mouseWheelScrolledListener)
+                        mouseWheelScrolledListener(event.mouseWheelScroll.delta);
                 break;
         }
     }

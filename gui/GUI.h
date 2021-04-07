@@ -7,11 +7,13 @@
 #include "Mouse.h"
 #include <functional>
 
-class Game;
-
 class GUI {
 protected:
-    std::weak_ptr<Game> game;
+    std::function<void(int, int)> mousePressedListener;
+    std::function<void(int, int)> mouseReleasedListener;
+    std::function<void(int, int)> mouseMovedListener;
+    std::function<void(int, int)> mouseClickedListener;
+    std::function<void(double)> mouseWheelScrolledListener;
 
 public:
     int width = 0;
@@ -45,9 +47,13 @@ public:
     createSlider(std::pair<std::string, std::string> position, std::pair<std::string, std::string> size, double step,
                  std::function<void(float)> callback) = 0;
 
-    virtual void pollEvents() = 0;
+    virtual void setMouseMovedListener(std::function<void(int, int)> listener);
+    virtual void setMousePressedListener(std::function<void(int, int)> listener);
+    virtual void setMouseReleasedListener(std::function<void(int, int)> listener);
+    virtual void setMouseClickedListener(std::function<void(int, int)> listener);
+    virtual void setMouseWheelScrolledListener(std::function<void(double)> listener);
 
-    virtual void setGame(std::weak_ptr<Game> game);
+    virtual void pollEvents() = 0;
 
     virtual unsigned long long delta() = 0;
 };

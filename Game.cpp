@@ -51,7 +51,16 @@ void Game::onMouseWheelScrolled(double scrollDelta) {
 
 void Game::setGUI(std::shared_ptr<GUI> gui) {
     this->gui = std::move(gui);
-    this->gui->setGame(shared_from_this());
+    this->gui->setMousePressedListener(std::bind(&Game::onMousePressed, this,
+                                                 std::placeholders::_1, std::placeholders::_2));
+    this->gui->setMouseReleasedListener(std::bind(&Game::onMouseReleased, this,
+                                                  std::placeholders::_1, std::placeholders::_2));
+    this->gui->setMouseMovedListener(std::bind(&Game::onMouseMoved, this,
+                                               std::placeholders::_1, std::placeholders::_2));
+    this->gui->setMouseClickedListener(std::bind(&Game::onMouseClicked, this,
+                                                 std::placeholders::_1, std::placeholders::_2));
+    this->gui->setMouseWheelScrolledListener(std::bind(&Game::onMouseWheelScrolled, this,
+                                                       std::placeholders::_1));
 }
 
 void Game::setMap(std::shared_ptr<Map> map) {
