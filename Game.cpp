@@ -32,7 +32,7 @@ void Game::loop() {
     }
 }
 
-Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0) {
+Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
 
 }
 
@@ -52,10 +52,19 @@ void Game::onMouseWheelScrolled(double scrollDelta) {
 void Game::setGUI(std::shared_ptr<GUI> gui) {
     this->gui = std::move(gui);
     this->gui->setGame(shared_from_this());
+    this->gui->createButton("End turn", {"72.5%", "90%"}, {"25%", "3%"},
+                            std::bind(&Game::nextTurn, std::ref(*this)));
 }
 
 void Game::setMap(std::shared_ptr<Map> map) {
     this->map = std::move(map);
+}
+
+void Game::nextTurn() {
+    std::cout << turn << std::endl;
+    if(players.empty()) return;
+    ++turn;
+    turn %= players.size();
 }
 
 Game::~Game() = default;

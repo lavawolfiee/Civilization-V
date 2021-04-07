@@ -1,0 +1,10 @@
+#ifndef CIVILIZATION_V_PLAYER_H
+#define CIVILIZATION_V_PLAYER_H
+
+
+class Player {
+
+};
+
+
+#endif //CIVILIZATION_V_PLAYER_H
