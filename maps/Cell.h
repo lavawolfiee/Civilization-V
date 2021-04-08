@@ -11,6 +11,8 @@ private:
     std::shared_ptr<Building> building;
     std::shared_ptr<Unit> unit;
 
+    bool focused;
+
 public:
     constexpr const static double SIZE = 50;
 
@@ -31,6 +33,9 @@ public:
 
     void setUnit(std::shared_ptr<Unit> unit);
     void render(std::shared_ptr<Batch> batch) override;
+
+    void focus();
+    void unfocus();
 };
 
 #endif //CIVILIZATION_V_CELL_H
