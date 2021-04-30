@@ -22,6 +22,8 @@ private:
     std::vector< std::shared_ptr< Player > > players;
     unsigned int turn;
 
+    double getMapScale();
+
 public:
     Game();
     ~Game();

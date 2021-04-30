@@ -1,6 +1,6 @@
 #include "Cell.h"
 
-Cell::Cell(Cell::Type type): type(type) {
+Cell::Cell(Cell::Type type): type(type), focused(false) {
 
 }
 
@@ -33,7 +33,10 @@ void Cell::render(std::shared_ptr<Batch> batch) {
     }
 
     batch->fillHexagon(0, 0, SIZE / 2, c,
-                      1, Color(0, 0, 0, 255));
+                      1, Color(0, 0, 0));
+
+    if(focused)
+        batch->fillHexagon(0, 0, SIZE / 2, Color(0, 0, 255, 50));
 
     if (building)
         building->render(batch);
@@ -46,6 +49,15 @@ Cell::Cell(const Cell &cell) {
     type = cell.type;
     building = std::move(cell.building);
     unit = std::move(cell.unit);
+    focused = cell.focused;
+}
+
+void Cell::focus() {
+    focused = true;
+}
+
+void Cell::unfocus() {
+    focused = false;
 }
 
 Cell::~Cell() = default;

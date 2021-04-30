@@ -8,8 +8,18 @@ void Game::loop() {
 
     double cameraVelocity = 500;
     gui->delta();
+    /*double x = 0;
+    double y = 0;*/
     while (gui->isOpen()) {
+        //map->selectCell(x, y);
         delta = gui->delta();
+
+        /*x += delta / 1000000.0;
+        if(x >= 20) {
+            x = 0;
+            ++y;
+        }*/
+
         const Mouse &mouse = gui->mouse;
         gui->pollEvents();
 
@@ -25,9 +35,7 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y,
-                                                                    (zoom >= 0.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) +
-                                                                    1), -x, -y));
+        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
         gui->display();
     }
 }
@@ -40,7 +48,15 @@ void Game::onMousePressed(int x, int y) {}
 
 void Game::onMouseReleased(int x, int y) {}
 
-void Game::onMouseMoved(int x, int y) {}
+void Game::onMouseMoved(int x, int y) {
+    double scale = getMapScale();
+    double cellSize = Cell::SIZE * scale / 2;
+    double xOnMap = x - (mapX - gui->width / 2) * scale - gui->width / 2 - cellSize;
+    double yOnMap = y - (mapY - gui->height / 2) * scale - gui->height / 2 - cellSize;
+    int cellX = floor((xOnMap / sqrt(3) - yOnMap / 3.0) / cellSize + 0.5);
+    int cellY = floor(2.0 * yOnMap / 3.0 / cellSize + 0.5);
+    map->selectCell(cellX + cellY / 2, cellY);
+}
 
 void Game::onMouseClicked(int x, int y) {}
 
@@ -74,6 +90,10 @@ void Game::nextTurn() {
     if(players.empty()) return;
     ++turn;
     turn %= players.size();
+}
+
+double Game::getMapScale() {
+    return (zoom >= 0.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) + 1;
 }
 
 Game::~Game() = default;
