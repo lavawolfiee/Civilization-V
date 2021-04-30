@@ -8,8 +8,7 @@
 #include "Player.h"
 
 #include <iostream>
-
-class GUI;
+#include "gui/GUI.h"
 
 class Game: public std::enable_shared_from_this<Game> {
 private:
