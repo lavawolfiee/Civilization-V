@@ -1,8 +1,8 @@
 #include "MapEditor.h"
 
 
-MapEditor::MapEditor(): mapGenerator(), delta(0), mapX(0.0), mapY(0.0), zoom(-1.0){
-    map = mapGenerator.generateMap(config);
+MapEditor::MapEditor(): mapController(), mapGenerator(), delta(0), mapX(0.0), mapY(0.0), zoom(-1.0){
+    mapController->setMap(mapGenerator.generateMap(config));
 };
 
 void MapEditor::setGUI(std::shared_ptr<GUI> gui) {
@@ -35,9 +35,9 @@ void MapEditor::loop() {
             mapY -= cameraVelocity * static_cast<double>(delta) / 1'000'000;
 
         gui->clear({129, 212, 250});
-        if(map) {
+        if(mapController->getMap()) {
             double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-            map->render(std::make_shared<Batch>(
+            mapController->render(std::make_shared<Batch>(
                     std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y,
                                             (zoom >= 1.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) + 1), -x, -y));
         }
@@ -46,7 +46,7 @@ void MapEditor::loop() {
 }
 
 void MapEditor::regenerateMap() {
-    map = mapGenerator.generateMap(config);
+    mapController->setMap(mapGenerator.generateMap(config));
 }
 
 void MapEditor::setFrequency(float freq) {

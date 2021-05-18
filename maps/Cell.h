@@ -32,6 +32,8 @@ public:
     ~Cell();
 
     void setUnit(std::shared_ptr<Unit> unit);
+    std::shared_ptr<Unit> getUnit();
+    bool hasUnit() const;
     void render(std::shared_ptr<Batch> batch) override;
 
     void focus();

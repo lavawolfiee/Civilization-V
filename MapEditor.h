@@ -2,6 +2,7 @@
 #define CIVILIZATION_V_MAPEDITOR_H
 
 #include <vector>
+#include <maps/MapController.h>
 #include "maps/Map.h"
 #include "gui/Batch.h"
 #include "gui/BatchGUI.h"
@@ -14,7 +15,7 @@ class MapEditor {
 private:
     std::shared_ptr<GUI> gui;
     StandardMapGenerator mapGenerator;
-    std::shared_ptr<Map> map;
+    std::shared_ptr<MapController> mapController;
     unsigned long long delta;
 
     double mapX, mapY;

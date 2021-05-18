@@ -35,7 +35,7 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        map->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
+        mapController->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
         gui->display();
     }
 }
@@ -46,16 +46,13 @@ Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
 
 void Game::onMousePressed(int x, int y) {}
 
-void Game::onMouseReleased(int x, int y) {}
+void Game::onMouseReleased(int x, int y) {
+
+}
 
 void Game::onMouseMoved(int x, int y) {
-    double scale = getMapScale();
-    double cellSize = Cell::SIZE * scale / 2;
-    double xOnMap = x - (mapX - gui->width / 2) * scale - gui->width / 2 - cellSize;
-    double yOnMap = y - (mapY - gui->height / 2) * scale - gui->height / 2 - cellSize;
-    int cellX = floor((xOnMap / sqrt(3) - yOnMap / 3.0) / cellSize + 0.5);
-    int cellY = floor(2.0 * yOnMap / 3.0 / cellSize + 0.5);
-    map->selectCell(cellX + cellY / 2, cellY);
+    auto cellCoord = getMouseMapCoord();
+    //mapController->selectCell(cellCoord.first, cellCoord.second);
 }
 
 void Game::onMouseClicked(int x, int y) {}
@@ -81,8 +78,8 @@ void Game::setGUI(std::shared_ptr<GUI> gui) {
                             std::bind(&Game::nextTurn, std::ref(*this)));
 }
 
-void Game::setMap(std::shared_ptr<Map> map) {
-    this->map = std::move(map);
+void Game::setMapController(std::shared_ptr<MapController> mapController) {
+    this->mapController = std::move(mapController);
 }
 
 void Game::nextTurn() {
@@ -92,8 +89,17 @@ void Game::nextTurn() {
     turn %= players.size();
 }
 
-double Game::getMapScale() {
+double Game::getMapScale() const {
     return (zoom >= 0.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) + 1;
+}
+
+std::pair<int, int> Game::getMouseMapCoord() const {
+    double x = gui->mouse.x, y = gui->mouse.y;
+    double scale = getMapScale();
+    double cellSize = Cell::SIZE * scale / 2;
+    double xOnMap = x - (mapX - gui->width / 2) * scale - gui->width / 2 - cellSize;
+    double yOnMap = y - (mapY - gui->height / 2) * scale - gui->height / 2 - cellSize;
+    return MapController::convertGlobalToMapCoord(xOnMap / cellSize, yOnMap / cellSize);
 }
 
 Game::~Game() = default;

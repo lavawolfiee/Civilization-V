@@ -60,4 +60,12 @@ void Cell::unfocus() {
     focused = false;
 }
 
+std::shared_ptr<Unit> Cell::getUnit() {
+    return unit;
+}
+
+bool Cell::hasUnit() const {
+    return unit != nullptr;
+}
+
 Cell::~Cell() = default;
