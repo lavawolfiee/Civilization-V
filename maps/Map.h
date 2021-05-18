@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-class Map: public Renderable {
+class Map {
 protected:
     size_t width, height;
     std::vector<std::vector<Cell>> field;
@@ -19,9 +19,9 @@ protected:
 
 public:
     Map(size_t width, size_t height);
-    const std::vector<std::vector<Cell>>& getField() const { return field; }
+    std::vector<std::vector<Cell>>& getField() { return field; }
     void setCell(size_t x, size_t y, const Cell& cell);
-    void render(std::shared_ptr<Batch> batch) override;
+    const Cell& getCell(size_t x, size_t y) const;
 
     void selectCell(size_t x, size_t y);
 };

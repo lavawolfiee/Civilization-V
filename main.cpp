@@ -15,9 +15,13 @@ int main(int argc, char* argv[]) {
     cout << "[OK]. Ну че [CENSORED] рот - погнали [CENSORED]!" << std::endl;
 #endif
     StandardMapGenerator mapGenerator;
+
+    std::shared_ptr<MapController> mapController = std::make_shared<MapController>();
+    mapController->setMap(mapGenerator.generateMap());
+
     std::shared_ptr<Game> game = std::make_shared<Game>();
     game->setGUI(std::make_shared<SfmlGUI>());
-    game->setMap(mapGenerator.generateMap());
+    game->setMapController(mapController);
     game->loop();
     /*std::shared_ptr<MapEditor> editor = std::make_shared<MapEditor>();
     editor->setGUI(std::make_shared<SfmlGUI>());
