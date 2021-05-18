@@ -22,10 +22,12 @@ private:
     std::vector< std::shared_ptr< Player > > players;
     unsigned int turn;
 
-    double getMapScale();
+    double getMapScale() const;
+
+    std::pair<int, int> xyToCell(int x, int y) const;
 
 public:
-    Game();
+    Game(int playersCnt = 2);
     ~Game();
 
     void loop();

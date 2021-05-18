@@ -36,6 +36,12 @@ public:
 
     void focus();
     void unfocus();
+
+    bool hasBuilding() const;
+    bool hasUnit() const;
+
+    std::shared_ptr<Building> getBuilding();
+    std::shared_ptr<Unit> getUnit();
 };
 
 #endif //CIVILIZATION_V_CELL_H

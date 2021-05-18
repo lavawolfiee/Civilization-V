@@ -40,7 +40,7 @@ void Game::loop() {
     }
 }
 
-Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
+Game::Game(int playersCnt) : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0), players(playersCnt) {
 
 }
 
@@ -49,16 +49,15 @@ void Game::onMousePressed(int x, int y) {}
 void Game::onMouseReleased(int x, int y) {}
 
 void Game::onMouseMoved(int x, int y) {
-    double scale = getMapScale();
-    double cellSize = Cell::SIZE * scale / 2;
-    double xOnMap = x - (mapX - gui->width / 2) * scale - gui->width / 2 - cellSize;
-    double yOnMap = y - (mapY - gui->height / 2) * scale - gui->height / 2 - cellSize;
-    int cellX = floor((xOnMap / sqrt(3) - yOnMap / 3.0) / cellSize + 0.5);
-    int cellY = floor(2.0 * yOnMap / 3.0 / cellSize + 0.5);
+    int cellX, cellY;
+    std::tie(cellX, cellY) = xyToCell(x, y);
     map->selectCell(cellX + cellY / 2, cellY);
 }
 
-void Game::onMouseClicked(int x, int y) {}
+void Game::onMouseClicked(int x, int y) {
+    int cellX, cellY;
+    std::tie(cellX, cellY) = xyToCell(x, y);
+}
 
 void Game::onMouseWheelScrolled(double scrollDelta) {
     zoom += scrollDelta / 4;
@@ -78,7 +77,7 @@ void Game::setGUI(std::shared_ptr<GUI> gui) {
     this->gui->setMouseWheelScrolledListener(std::bind(&Game::onMouseWheelScrolled, this,
                                                        std::placeholders::_1));
     this->gui->createButton("End turn", {"72.5%", "90%"}, {"25%", "3%"},
-                            std::bind(&Game::nextTurn, std::ref(*this)));
+                            [&capture = *this] { capture.nextTurn(); });
 }
 
 void Game::setMap(std::shared_ptr<Map> map) {
@@ -92,8 +91,18 @@ void Game::nextTurn() {
     turn %= players.size();
 }
 
-double Game::getMapScale() {
+double Game::getMapScale() const {
     return (zoom >= 0.0 ? tanh(zoom) * 1.5 : tanh(zoom) / 2) + 1;
+}
+
+std::pair<int, int> Game::xyToCell(int x, int y) const {
+    double scale = getMapScale();
+    double cellSize = Cell::SIZE * scale / 2;
+    double xOnMap = x - (mapX - gui->width / 2) * scale - gui->width / 2 - cellSize;
+    double yOnMap = y - (mapY - gui->height / 2) * scale - gui->height / 2 - cellSize;
+    int cellX = floor((xOnMap / sqrt(3) - yOnMap / 3.0) / cellSize + 0.5);
+    int cellY = floor(2.0 * yOnMap / 3.0 / cellSize + 0.5);
+    return {cellX, cellY};
 }
 
 Game::~Game() = default;
