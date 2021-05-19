@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 
+
 class Cell: public Renderable, public std::enable_shared_from_this<Cell> {
 private:
     std::shared_ptr<Building> building;
@@ -27,6 +28,11 @@ public:
         DESERT
     };
 
+    enum Effects {
+        NO_EFFECT = 0,
+        SELECTED = 0b1
+    };
+
     Type type;
 
     Cell(Type type);
@@ -38,6 +44,7 @@ public:
     bool hasUnit() const;
     void eraseUnit();
     void render(std::shared_ptr<Batch> batch) override;
+    void render(std::shared_ptr<Batch> batch, Effects effects);
 
     void focus();
     void unfocus();

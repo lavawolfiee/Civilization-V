@@ -24,6 +24,8 @@ public:
     void setCell(std::weak_ptr<Cell> newCell);
     std::shared_ptr<Cell> getCell();
 
+    unsigned int getMovePoints() const { return movePoints; };
+
 };
 
 class BattleUnit: public Unit {

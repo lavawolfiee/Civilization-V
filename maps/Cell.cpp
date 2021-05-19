@@ -10,6 +10,10 @@ void Cell::setUnit(std::shared_ptr<Unit> unit) {
 }
 
 void Cell::render(std::shared_ptr<Batch> batch) {
+    render(std::move(batch), {});
+}
+
+void Cell::render(std::shared_ptr<Batch> batch, Effects effects) {
     Color c;
     switch (type) {
         case Cell::DEEPWATER:
@@ -33,9 +37,9 @@ void Cell::render(std::shared_ptr<Batch> batch) {
     }
 
     batch->fillHexagon(0, 0, SIZE / 2, c,
-                      1, Color(0, 0, 0));
+                       1, Color(0, 0, 0));
 
-    if(focused)
+    if(effects & SELECTED)
         batch->fillHexagon(0, 0, SIZE / 2, Color(0, 0, 255, 50));
 
     if (building)

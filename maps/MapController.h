@@ -2,12 +2,16 @@
 #define CIVILIZATION_V_MAPCONTROLLER_H
 
 #include "Map.h"
+#include "MovementArea.h"
+
+#include <queue>
 
 class MapController: public Renderable {
 
 private:
     std::shared_ptr<Map> map;
     std::shared_ptr<Unit> selectedUnit;
+    MovementArea selectedUnitArea;
 
     void selectUnit(std::shared_ptr<Unit> unit);
     void deselectUnit();
@@ -28,6 +32,8 @@ public:
 
     void addUnit(int x, int y, std::shared_ptr<Unit> unit);
 
+    static std::vector< Point > getNeighbours(Point p) ;
+    MovementArea generateMovementArea(Point p, unsigned int movePoints) const;
 };
 
 
