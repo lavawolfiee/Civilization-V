@@ -10,7 +10,13 @@ void Game::loop() {
 
     AncientUnitFactory factory;
     std::shared_ptr<Unit> unit = factory.createUnit(UnitFactory::UnitType::MELEE);
+    unit->setPlayer(players.at(0));
     mapController->addUnit(10, 10, unit);
+
+    ClassicalUnitFactory factory2;
+    std::shared_ptr<Unit> unit2 = factory2.createUnit(UnitFactory::UnitType::MELEE);
+    unit2->setPlayer(players.at(1));
+    mapController->addUnit(20, 20, unit2);
 
     while (gui->isOpen()) {
         delta = gui->delta();
@@ -36,8 +42,11 @@ void Game::loop() {
     }
 }
 
-Game::Game(int playersCnt) : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0), players(playersCnt) {
+Game::Game(int playersCnt) : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
+    players.reserve(playersCnt);
 
+    for (int i = 0; i < playersCnt; ++i)
+        players.push_back(std::make_shared<Player>(i));
 }
 
 void Game::onMousePressed(int x, int y) {}
@@ -77,6 +86,7 @@ void Game::setGUI(std::shared_ptr<GUI> gui) {
 
 void Game::setMapController(std::shared_ptr<MapController> mapController) {
     this->mapController = std::move(mapController);
+    this->mapController->setTurn(turn);
 }
 
 void Game::nextTurn() {
@@ -84,6 +94,7 @@ void Game::nextTurn() {
     if (players.empty()) return;
     ++turn;
     turn %= players.size();
+    mapController->setTurn(turn);
 }
 
 double Game::getMapScale() const {

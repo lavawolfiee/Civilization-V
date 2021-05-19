@@ -3,7 +3,16 @@
 
 
 class Player {
+private:
+    int number;
 
+public:
+    explicit Player(int number);
+
+    int getNumber() const;
+
+    bool operator==(const Player& other) const;
+    bool operator!=(const Player& other) const;
 };
 
 

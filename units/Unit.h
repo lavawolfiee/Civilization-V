@@ -9,6 +9,7 @@ using std::endl;
 
 #include "../gui/Renderable.h"
 #include "../buildings/Building.h"
+#include "../Player.h"
 
 #include <vector>
 #include <iostream>
@@ -18,12 +19,16 @@ class Cell;
 class Unit: public Renderable {
 protected:
     std::weak_ptr<Cell> currentCell;
+    std::shared_ptr<Player> player;
     unsigned int movePoints;
     explicit Unit(unsigned int movePoints) : movePoints(movePoints) {};
 public:
     void setCell(std::weak_ptr<Cell> newCell);
     std::shared_ptr<Cell> getCell();
+    std::shared_ptr<Player> getPlayer();
+    void setPlayer(std::shared_ptr<Player> player);
 
+    void die();
 };
 
 class BattleUnit: public Unit {
@@ -32,6 +37,7 @@ protected:
     int currentHealth;
     unsigned int strength;
     unsigned int attackRange;
+
     BattleUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
         Unit(movePoints),
         maxHealth(maxHealth),
@@ -39,6 +45,10 @@ protected:
         strength(strength),
         attackRange(attackRange)
     {};
+
+public:
+    bool applyDamage(int damage);
+    bool attack(const std::shared_ptr<BattleUnit>& other_unit);
 };
 
 class PieceUnit: public Unit {
