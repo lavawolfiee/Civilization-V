@@ -51,8 +51,8 @@ void Cell::render(std::shared_ptr<Batch> batch, Effects effects) {
 
 Cell::Cell(const Cell &cell) {
     type = cell.type;
-    building = std::move(cell.building);
-    unit = std::move(cell.unit);
+    building = cell.building;
+    unit = cell.unit;
     focused = cell.focused;
 }
 
@@ -64,12 +64,20 @@ void Cell::unfocus() {
     focused = false;
 }
 
-std::shared_ptr<Unit> Cell::getUnit() {
-    return unit;
+bool Cell::hasBuilding() const {
+    return static_cast<bool>(building);
 }
 
 bool Cell::hasUnit() const {
-    return unit != nullptr;
+    return static_cast<bool>(unit);
+}
+
+std::shared_ptr<Building> Cell::getBuilding() {
+    return building;
+}
+
+std::shared_ptr<Unit> Cell::getUnit() {
+    return unit;
 }
 
 void Cell::eraseUnit() {

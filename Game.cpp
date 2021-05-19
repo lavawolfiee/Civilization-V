@@ -5,27 +5,23 @@
 #include <utility>
 
 void Game::loop() {
-
     double cameraVelocity = 500;
     gui->delta();
 
     AncientUnitFactory factory;
     std::shared_ptr<Unit> unit = factory.createUnit(UnitFactory::UnitType::MELEE);
+    unit->setPlayer(players.at(0));
     mapController->addUnit(10, 10, unit);
 
-    /*double x = 0;
-    double y = 0;*/
-    while (gui->isOpen()) {
+    ClassicalUnitFactory factory2;
+    std::shared_ptr<Unit> unit2 = factory2.createUnit(UnitFactory::UnitType::MELEE);
+    unit2->setPlayer(players.at(1));
+    mapController->addUnit(20, 20, unit2);
 
+    while (gui->isOpen()) {
         delta = gui->delta();
 
-        /*x += delta / 1000000.0;
-        if(x >= 20) {
-            x = 0;
-            ++y;
-        }*/
-
-        const Mouse &mouse = gui->mouse;
+        const Mouse& mouse = gui->mouse;
         gui->pollEvents();
 
         if (mouse.x <= 0.025 * gui->width)
@@ -40,13 +36,17 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        mapController->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
+        mapController->render(std::make_shared<Batch>(
+                std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
         gui->display();
     }
 }
 
-Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
+Game::Game(int playersCnt) : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
+    players.reserve(playersCnt);
 
+    for (int i = 0; i < playersCnt; ++i)
+        players.push_back(std::make_shared<Player>(i));
 }
 
 void Game::onMousePressed(int x, int y) {}
@@ -81,18 +81,20 @@ void Game::setGUI(std::shared_ptr<GUI> gui) {
     this->gui->setMouseWheelScrolledListener(std::bind(&Game::onMouseWheelScrolled, this,
                                                        std::placeholders::_1));
     this->gui->createButton("End turn", {"72.5%", "90%"}, {"25%", "3%"},
-                            std::bind(&Game::nextTurn, std::ref(*this)));
+                            [&capture = *this] { capture.nextTurn(); });
 }
 
 void Game::setMapController(std::shared_ptr<MapController> mapController) {
     this->mapController = std::move(mapController);
+    this->mapController->setTurn(turn);
 }
 
 void Game::nextTurn() {
     std::cout << turn << std::endl;
-    if(players.empty()) return;
+    if (players.empty()) return;
     ++turn;
     turn %= players.size();
+    mapController->setTurn(turn);
 }
 
 double Game::getMapScale() const {

@@ -40,14 +40,18 @@ public:
     ~Cell();
 
     void setUnit(std::shared_ptr<Unit> unit);
-    std::shared_ptr<Unit> getUnit();
-    bool hasUnit() const;
     void eraseUnit();
     void render(std::shared_ptr<Batch> batch) override;
     void render(std::shared_ptr<Batch> batch, Effects effects);
 
     void focus();
     void unfocus();
+
+    bool hasBuilding() const;
+    bool hasUnit() const;
+
+    std::shared_ptr<Building> getBuilding();
+    std::shared_ptr<Unit> getUnit();
 };
 
 #endif //CIVILIZATION_V_CELL_H

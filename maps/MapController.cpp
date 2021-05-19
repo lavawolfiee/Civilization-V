@@ -15,10 +15,20 @@ void MapController::setMap(std::shared_ptr<Map> map) {
 void MapController::onCellClicked(int x, int y) {
     if (x < 0 || y < 0 || x >= map->size().second || y >= map->size().first) return;
     auto cell = map->getCell(x, y);
-    if (cell->hasUnit()) {
-        selectUnit(std::move(cell->getUnit()));
-        selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
-    } else if (selectedUnit && selectedUnitArea.isIn(x, y)) {
+    if(cell->hasUnit()) {
+        auto unit = cell->getUnit();
+
+        if (unit->getPlayer()->getNumber() == turn) {
+            selectUnit(std::move(unit));
+            selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
+        } else if (selectedUnit) {
+            bool died = attackUnit(selectedUnit, unit);
+
+            if (died)
+                moveUnit(selectedUnit, x, y);
+                selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
+        }
+    } else if(selectedUnit) {
         moveUnit(selectedUnit, x, y);
         selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
     }
@@ -100,4 +110,19 @@ std::vector<Point > MapController::getNeighbours(Point p) {
         result.emplace_back(p.x + i.x, p.y + i.y);
     }
     return result;
+}
+
+bool MapController::attackUnit(const std::shared_ptr<Unit>& unit, const std::shared_ptr<Unit>& other_unit) {
+    std::shared_ptr<BattleUnit> battle_unit = std::dynamic_pointer_cast<BattleUnit>(unit);
+    std::shared_ptr<BattleUnit> other_battle_unit = std::dynamic_pointer_cast<BattleUnit>(other_unit);
+
+    if (battle_unit && other_battle_unit) {
+        return battle_unit->attack(other_battle_unit);
+    }
+
+    return false;
+}
+
+void MapController::setTurn(int _turn) {
+    turn = _turn;
 }

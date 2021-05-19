@@ -30,7 +30,7 @@ private:
     std::pair< int, int > getMouseMapCoord() const;
 
 public:
-    Game();
+    Game(int playersCnt = 2);
     ~Game();
 
     void loop();
