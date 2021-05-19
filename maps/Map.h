@@ -13,15 +13,18 @@
 class Map {
 protected:
     size_t width, height;
-    std::vector<std::vector<Cell>> field;
+    std::vector<std::vector<std::shared_ptr<Cell>>> field;
 
     std::pair< size_t, size_t > selected;
 
 public:
     Map(size_t width, size_t height);
-    std::vector<std::vector<Cell>>& getField() { return field; }
-    void setCell(size_t x, size_t y, const Cell& cell);
-    const Cell& getCell(size_t x, size_t y) const;
+    std::vector<std::vector<std::shared_ptr<Cell>>>& getField() { return field; }
+    void setCell(size_t x, size_t y, std::shared_ptr<Cell> cell);
+    std::shared_ptr<const Cell> getCell(size_t x, size_t y) const;
+    std::shared_ptr<Cell> getCell(size_t x, size_t y);
+
+    std::pair< size_t, size_t > size() const;
 
     void selectCell(size_t x, size_t y);
 };

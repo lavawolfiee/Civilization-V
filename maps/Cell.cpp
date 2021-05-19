@@ -76,4 +76,8 @@ std::shared_ptr<Unit> Cell::getUnit() {
     return unit;
 }
 
+void Cell::eraseUnit() {
+    unit = nullptr;
+}
+
 Cell::~Cell() = default;

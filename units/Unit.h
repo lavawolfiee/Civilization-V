@@ -9,7 +9,9 @@ using std::endl;
 
 #include "../gui/Renderable.h"
 #include "../buildings/Building.h"
+
 #include <vector>
+#include <iostream>
 
 class Cell;
 
@@ -20,6 +22,8 @@ protected:
     explicit Unit(unsigned int movePoints) : movePoints(movePoints) {};
 public:
     void setCell(std::weak_ptr<Cell> newCell);
+    std::shared_ptr<Cell> getCell();
+
 };
 
 class BattleUnit: public Unit {

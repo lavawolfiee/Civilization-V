@@ -4,7 +4,9 @@
 #include "../gui/Renderable.h"
 #include "../units/Unit.h"
 #include "../buildings/Building.h"
+
 #include <vector>
+#include <iostream>
 
 class Cell: public Renderable, public std::enable_shared_from_this<Cell> {
 private:
@@ -32,6 +34,7 @@ public:
     ~Cell();
 
     void setUnit(std::shared_ptr<Unit> unit);
+    void eraseUnit();
     void render(std::shared_ptr<Batch> batch) override;
 
     void focus();
