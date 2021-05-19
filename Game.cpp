@@ -5,22 +5,13 @@
 #include <utility>
 
 void Game::loop() {
-
     double cameraVelocity = 500;
     gui->delta();
-    /*double x = 0;
-    double y = 0;*/
+
     while (gui->isOpen()) {
-        //map->selectCell(x, y);
         delta = gui->delta();
 
-        /*x += delta / 1000000.0;
-        if(x >= 20) {
-            x = 0;
-            ++y;
-        }*/
-
-        const Mouse &mouse = gui->mouse;
+        const Mouse& mouse = gui->mouse;
         gui->pollEvents();
 
         if (mouse.x <= 0.025 * gui->width)
@@ -35,7 +26,8 @@ void Game::loop() {
 
         gui->clear({129, 212, 250});
         double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
-        mapController->render(std::make_shared<Batch>(std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
+        mapController->render(std::make_shared<Batch>(
+                std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
         gui->display();
     }
 }
@@ -56,8 +48,7 @@ void Game::onMouseMoved(int x, int y) {
 }
 
 void Game::onMouseClicked(int x, int y) {
-    int cellX, cellY;
-    std::tie(cellX, cellY) = xyToCell(x, y);
+
 }
 
 void Game::onMouseWheelScrolled(double scrollDelta) {
@@ -87,7 +78,7 @@ void Game::setMapController(std::shared_ptr<MapController> mapController) {
 
 void Game::nextTurn() {
     std::cout << turn << std::endl;
-    if(players.empty()) return;
+    if (players.empty()) return;
     ++turn;
     turn %= players.size();
 }
