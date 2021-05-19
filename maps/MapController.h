@@ -12,6 +12,8 @@ private:
     void selectUnit(std::shared_ptr<Unit> unit);
     void deselectUnit();
 
+    void moveUnit(std::shared_ptr<Unit> unit, int x, int y);
+
 public:
 
     static std::pair< int, int > convertGlobalToMapCoord(int x, int y);
@@ -23,6 +25,8 @@ public:
     void render(std::shared_ptr<Batch> batch) override;
 
     std::shared_ptr<const Map> getMap() const;
+
+    void addUnit(int x, int y, std::shared_ptr<Unit> unit);
 
 };
 

@@ -8,10 +8,15 @@ void Game::loop() {
 
     double cameraVelocity = 500;
     gui->delta();
+
+    AncientUnitFactory factory;
+    std::shared_ptr<Unit> unit = factory.createUnit(UnitFactory::UnitType::MELEE);
+    mapController->addUnit(10, 10, unit);
+
     /*double x = 0;
     double y = 0;*/
     while (gui->isOpen()) {
-        //map->selectCell(x, y);
+
         delta = gui->delta();
 
         /*x += delta / 1000000.0;
@@ -47,7 +52,8 @@ Game::Game() : delta(0), mapX(0.0), mapY(0.0), zoom(0.0), turn(0) {
 void Game::onMousePressed(int x, int y) {}
 
 void Game::onMouseReleased(int x, int y) {
-
+    auto cellCoord = getMouseMapCoord();
+    mapController->onCellClicked(cellCoord.first, cellCoord.second);
 }
 
 void Game::onMouseMoved(int x, int y) {

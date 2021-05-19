@@ -68,4 +68,8 @@ bool Cell::hasUnit() const {
     return unit != nullptr;
 }
 
+void Cell::eraseUnit() {
+    unit = nullptr;
+}
+
 Cell::~Cell() = default;

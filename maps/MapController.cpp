@@ -13,9 +13,12 @@ void MapController::setMap(std::shared_ptr<Map> map) {
 }
 
 void MapController::onCellClicked(int x, int y) {
+    if(x < 0 || y < 0 || x >= map->size().second || y >= map->size().first) return;
     auto cell = map->getCell(x, y);
-    if(cell.hasUnit()) {
-        selectUnit(cell.getUnit());
+    if(cell->hasUnit()) {
+        selectUnit(std::move(cell->getUnit()));
+    } else if(selectedUnit) {
+        moveUnit(selectedUnit, x, y);
     }
 }
 
@@ -40,8 +43,8 @@ void MapController::render(std::shared_ptr<Batch> batch) {
             cellBatch->update(batch, j * (Cell::SIZE * sqrt(3) / 2.0) +
                                      (i % 2) * Cell::SIZE * sqrt(3) / 4.0,
                               i * Cell::SIZE * 3 / 4);
-            field.at(i).at(j).render(cellBatch);
-            field.at(i).at(j).unfocus();
+            field.at(i).at(j)->render(cellBatch);
+            field.at(i).at(j)->unfocus();
         }
     }
 
@@ -49,4 +52,13 @@ void MapController::render(std::shared_ptr<Batch> batch) {
 
 std::shared_ptr<const Map> MapController::getMap() const {
     return map;
+}
+
+void MapController::addUnit(int x, int y, std::shared_ptr<Unit> unit) {
+    map->getField().at(y).at(x)->setUnit(std::move(unit));
+}
+
+void MapController::moveUnit(std::shared_ptr<Unit> unit, int x, int y) {
+    unit->getCell()->eraseUnit();
+    map->getCell(x, y)->setUnit(std::move(unit));
 }

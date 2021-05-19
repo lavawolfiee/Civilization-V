@@ -26,7 +26,7 @@ std::shared_ptr<Map> StandardMapGenerator::generateMap(MapConfig &cfg) {
                 long long j = 0;
                 for (; j < config.bounds[i].size() && pixels[y][x] > config.bounds[i][j]; ++j);
                 type = config.types[i][j];
-                map->setCell(x, y, Cell(type));
+                map->setCell(x, y, std::make_shared<Cell>(type));
             }
         }
     }
