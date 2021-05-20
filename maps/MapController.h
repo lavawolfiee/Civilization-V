@@ -42,6 +42,7 @@ public:
     unsigned int movementCost(Point from, Point to) const;
 
     bool isInBounds(Point p) const;
+
 };
 
 

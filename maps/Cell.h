@@ -4,7 +4,7 @@
 #include "../gui/Renderable.h"
 #include "../units/Unit.h"
 #include "../buildings/Building.h"
-#include "../Utilities.h"
+#include "Utilities.h"
 
 #include <vector>
 #include <iostream>

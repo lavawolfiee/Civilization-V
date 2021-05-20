@@ -40,9 +40,7 @@ bool BattleUnit::applyDamage(int damage) {
 }
 
 bool BattleUnit::attack(const std::shared_ptr<BattleUnit>& other_unit) {
-    Point startPoint = getCell()->getPoint();
-    Point endPoint = other_unit->getCell()->getPoint();
-    int dist = abs(startPoint.x - endPoint.x) + abs(startPoint.y - endPoint.y);
+    unsigned int dist = hexDistance(getCell()->getPoint(), other_unit->getCell()->getPoint());
 
     if (dist <= attackRange) {
         // melee attack
@@ -53,9 +51,7 @@ bool BattleUnit::attack(const std::shared_ptr<BattleUnit>& other_unit) {
 }
 
 bool RangeUnit::attack(const std::shared_ptr<BattleUnit>& other_unit) {
-    Point startPoint = getCell()->getPoint();
-    Point endPoint = other_unit->getCell()->getPoint();
-    int dist = abs(startPoint.x - endPoint.x) + abs(startPoint.y - endPoint.y);
+    unsigned int dist = hexDistance(getCell()->getPoint(), other_unit->getCell()->getPoint());
 
     if (dist <= 1) {
         // melee attack
