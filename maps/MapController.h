@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "MovementArea.h"
 
-#include <queue>
+#include <set>
 
 class MapController: public Renderable {
 
@@ -38,6 +38,10 @@ public:
 
     static std::vector< Point > getNeighbours(Point p) ;
     MovementArea generateMovementArea(Point p, unsigned int movePoints) const;
+
+    unsigned int movementCost(Point from, Point to) const;
+
+    bool isInBounds(Point p) const;
 };
 
 

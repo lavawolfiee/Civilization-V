@@ -17,14 +17,22 @@ void Map::selectCell(size_t x, size_t y) {
     selected = {x, y};
 }
 
-std::shared_ptr<const Cell> Map::getCell(size_t x, size_t y) const {
+std::shared_ptr<const Cell> Map::getCell(int x, int y) const {
     return field.at(y).at(x);
 }
 
-std::shared_ptr<Cell> Map::getCell(size_t x, size_t y) {
+std::shared_ptr<Cell> Map::getCell(int x, int y) {
     return field.at(y).at(x);
 }
 
 std::pair<size_t, size_t> Map::size() const {
     return std::make_pair(field.size(), field[0].size());
+}
+
+std::shared_ptr<const Cell> Map::getCell(Point p) const {
+    return getCell(p.x, p.y);
+}
+
+std::shared_ptr<Cell> Map::getCell(Point p) {
+    return getCell(p.x, p.y);
 }

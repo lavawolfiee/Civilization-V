@@ -13,7 +13,7 @@ void MapController::setMap(std::shared_ptr<Map> map) {
 }
 
 void MapController::onCellClicked(int x, int y) {
-    if (x < 0 || y < 0 || x >= map->size().second || y >= map->size().first) return;
+    if (!isInBounds({x, y})) return;
     auto cell = map->getCell(x, y);
     if(cell->hasUnit()) {
         auto unit = cell->getUnit();
@@ -24,11 +24,12 @@ void MapController::onCellClicked(int x, int y) {
         } else if (selectedUnit) {
             bool died = attackUnit(selectedUnit, unit);
 
-            if (died)
+            if (died) {
                 moveUnit(selectedUnit, x, y);
                 selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
+            }
         }
-    } else if(selectedUnit) {
+    } else if(selectedUnit && selectedUnitArea.isIn(x, y)) {
         moveUnit(selectedUnit, x, y);
         selectedUnitArea = generateMovementArea({x, y}, selectedUnit->getMovePoints());
     }
@@ -82,17 +83,27 @@ void MapController::moveUnit(std::shared_ptr<Unit> unit, int x, int y) {
 MovementArea MapController::generateMovementArea(Point p, unsigned int movePoints) const {
     MovementArea area;
 
-    std::queue< Point > queue;
-    queue.push(p);
+    std::set< std::pair< int, Point > > queue;
+    std::unordered_map< Point, decltype(queue)::iterator > iterators;
+    iterators[p] = queue.insert({0, p}).first;
     while (!queue.empty()) {
-        if(area.size() > 20) break;
-        auto v = queue.front();
-        queue.pop();
-        if (v.x < 0 || v.y < 0 || v.x >= map->size().second || v.y >= map->size().first) continue;
+        auto [dist, v] = *queue.begin();
+        queue.erase(queue.begin());
+        if(dist > movePoints) continue;
+        if (!isInBounds(v)) continue;
         if(area.isIn(v)) continue;
         area.addCell(v);
         auto neighbours = getNeighbours(v);
-        for(auto& i: neighbours) queue.push(i);
+        for(auto& i: neighbours) {
+            auto cost = movementCost(v, i);
+            if(cost == std::numeric_limits<unsigned int>::max()) continue;
+            if(iterators.find(i) == iterators.end()) {
+                iterators[i] = queue.insert({dist + cost, i}).first;
+                continue;
+            }
+            if(iterators[i]->first < dist + cost) continue;
+            queue.insert({dist + cost, i}).first;
+        }
     }
     return area;
 }
@@ -125,4 +136,42 @@ bool MapController::attackUnit(const std::shared_ptr<Unit>& unit, const std::sha
 
 void MapController::setTurn(int _turn) {
     turn = _turn;
+}
+
+unsigned int MapController::movementCost(Point from, Point to) const {
+    if(!isInBounds(from) || !isInBounds(to))
+        return std::numeric_limits<unsigned int>::max();
+    auto neighbours = getNeighbours(from);
+    if(std::find(neighbours.begin(), neighbours.end(), to) == neighbours.end())
+        //throw std::invalid_argument("From an to are not neighbours!");
+        return std::numeric_limits<unsigned int>::max();
+
+    auto fromType = map->getCell(from)->type;
+    auto toType = map->getCell(to)->type;
+    if((fromType == Cell::WATER || fromType == Cell::DEEPWATER) ^ (toType == Cell::WATER || toType == Cell::DEEPWATER))
+        return std::numeric_limits<unsigned int>::max();
+
+    if((fromType == Cell::MOUNTAIN) ^ (toType == Cell::MOUNTAIN))
+        return std::numeric_limits<unsigned int>::max();
+
+    std::unordered_map< std::pair< Cell::Type, Cell::Type >, unsigned int > distances = {
+            { {Cell::PLAIN, Cell::PLAIN}, 1},
+            { {Cell::DESERT, Cell::DESERT}, 1},
+            { {Cell::HILL, Cell::HILL}, 1},
+            { {Cell::WATER, Cell::WATER}, 1},
+            { {Cell::DEEPWATER, Cell::DEEPWATER}, 1},
+            { {Cell::DEEPWATER, Cell::WATER}, 1},
+            { {Cell::WATER, Cell::DEEPWATER}, 1},
+            { {Cell::PLAIN, Cell::DESERT}, 1},
+            { {Cell::DESERT, Cell::PLAIN}, 1},
+            { {Cell::HILL, Cell::PLAIN}, 1},
+            { {Cell::PLAIN, Cell::HILL}, 2},
+            { {Cell::HILL, Cell::DESERT}, 1},
+            { {Cell::DESERT, Cell::HILL}, 2},
+    };
+    return distances[{fromType, toType}];
+}
+
+bool MapController::isInBounds(Point p) const {
+    return (p.x >= 0 && p.y >= 0 && p.x < map->size().second && p.y < map->size().first);
 }

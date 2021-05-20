@@ -1,14 +1,15 @@
 #ifndef CIVILIZATION_V_MAP_H
 #define CIVILIZATION_V_MAP_H
 
-
-#include <vector>
 #include "Cell.h"
 #include "../gui/Renderable.h"
 #include "../units/Factory.h"
-#include <cmath>
 
+#include "Utilities.h"
+
+#include <cmath>
 #include <iostream>
+#include <vector>
 
 class Map {
 protected:
@@ -21,8 +22,11 @@ public:
     Map(size_t width, size_t height);
     std::vector<std::vector<std::shared_ptr<Cell>>>& getField() { return field; }
     void setCell(size_t x, size_t y, std::shared_ptr<Cell> cell);
-    std::shared_ptr<const Cell> getCell(size_t x, size_t y) const;
-    std::shared_ptr<Cell> getCell(size_t x, size_t y);
+
+    std::shared_ptr<const Cell> getCell(int x, int y) const;
+    std::shared_ptr<Cell> getCell(int x, int y);
+    std::shared_ptr<const Cell> getCell(Point p) const;
+    std::shared_ptr<Cell> getCell(Point p);
 
     std::pair< size_t, size_t > size() const;
 
