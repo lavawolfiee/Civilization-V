@@ -4,6 +4,7 @@
 #include "../gui/Renderable.h"
 #include "../units/Unit.h"
 #include "../buildings/Building.h"
+#include "../Utilities.h"
 
 #include <vector>
 #include <iostream>
@@ -13,8 +14,7 @@ class Cell: public Renderable, public std::enable_shared_from_this<Cell> {
 private:
     std::shared_ptr<Building> building;
     std::shared_ptr<Unit> unit;
-
-    bool focused;
+    Point point;
 
 public:
     constexpr const static double SIZE = 50;
@@ -35,7 +35,7 @@ public:
 
     Type type;
 
-    Cell(Type type);
+    Cell(Type type, int x, int y);
     Cell(const Cell& cell);
     ~Cell();
 
@@ -44,14 +44,13 @@ public:
     void render(std::shared_ptr<Batch> batch) override;
     void render(std::shared_ptr<Batch> batch, Effects effects);
 
-    void focus();
-    void unfocus();
-
     bool hasBuilding() const;
     bool hasUnit() const;
 
     std::shared_ptr<Building> getBuilding();
     std::shared_ptr<Unit> getUnit();
+
+    const Point& getPoint() const;
 };
 
 #endif //CIVILIZATION_V_CELL_H

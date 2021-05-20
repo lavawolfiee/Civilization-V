@@ -5,24 +5,24 @@
 
 class IndustrialRangeUnit: public RangeUnit {
 public:
-    IndustrialRangeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange, unsigned int strengthRange) :
-            RangeUnit(maxHealth, strength, movePoints, attackRange, strengthRange)
+    IndustrialRangeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange, unsigned int damageRange) :
+            RangeUnit(maxHealth, damage, movePoints, attackRange, damageRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class IndustrialMeleeUnit: public MeleeUnit {
 public:
-    IndustrialMeleeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            MeleeUnit(maxHealth, strength, movePoints, attackRange)
+    IndustrialMeleeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            MeleeUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class IndustrialCavalryUnit: public CavalryUnit {
 public:
-    IndustrialCavalryUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            CavalryUnit(maxHealth, strength, movePoints, attackRange)
+    IndustrialCavalryUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            CavalryUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };

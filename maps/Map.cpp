@@ -3,18 +3,16 @@
 
 Map::Map(size_t width, size_t height) : width(width),
                                         height(height),
-                                        field(decltype(field)(height,
-                                                              std::vector<std::shared_ptr<Cell> >(
-                                                                      width,
-                                                                      std::make_shared<Cell>(Cell::WATER)))),
-                                        selected({-1, -1}) {}
+                                        field(decltype(field)(height)) {
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            field.at(y).push_back(std::make_shared<Cell>(Cell::WATER, x, y));
+        }
+    }
+}
 
 void Map::setCell(size_t x, size_t y, std::shared_ptr<Cell> cell) {
     field.at(y).at(x) = std::move(cell);
-}
-
-void Map::selectCell(size_t x, size_t y) {
-    selected = {x, y};
 }
 
 std::shared_ptr<const Cell> Map::getCell(int x, int y) const {

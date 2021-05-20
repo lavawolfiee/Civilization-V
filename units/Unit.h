@@ -36,21 +36,21 @@ public:
 class BattleUnit: public Unit {
 protected:
     int maxHealth;
-    int currentHealth;
-    unsigned int strength;
+    int health;
+    unsigned int damage;
     unsigned int attackRange;
 
-    BattleUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
+    BattleUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
         Unit(movePoints),
         maxHealth(maxHealth),
-        currentHealth(maxHealth),
-        strength(strength),
+        health(maxHealth),
+        damage(damage),
         attackRange(attackRange)
     {};
 
 public:
-    bool applyDamage(int damage);
-    bool attack(const std::shared_ptr<BattleUnit>& other_unit);
+    virtual bool applyDamage(int damage);
+    virtual bool attack(const std::shared_ptr<BattleUnit>& other_unit);
 };
 
 class PieceUnit: public Unit {
@@ -62,25 +62,27 @@ protected:
 
 class RangeUnit: public BattleUnit {
 private:
-    unsigned int strengthRange;
+    unsigned int damageRange;
 public:
-    RangeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange, unsigned int strengthRange) :
-        BattleUnit(maxHealth, strength, movePoints, attackRange),
-        strengthRange(strengthRange)
+    RangeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange, unsigned int damageRange) :
+        BattleUnit(maxHealth, damage, movePoints, attackRange),
+        damageRange(damageRange)
     {};
+
+    bool attack(const std::shared_ptr<BattleUnit>& other_unit) override;
 };
 
 class MeleeUnit: public BattleUnit {
 public:
-    MeleeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            BattleUnit(maxHealth, strength, movePoints, attackRange)
+    MeleeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            BattleUnit(maxHealth, damage, movePoints, attackRange)
     {};
 };
 
 class CavalryUnit: public BattleUnit {
 public:
-    CavalryUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            BattleUnit(maxHealth, strength, movePoints, attackRange)
+    CavalryUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            BattleUnit(maxHealth, damage, movePoints, attackRange)
     {};
 };
 

@@ -29,9 +29,9 @@ void Unit::setPlayer(std::shared_ptr<Player> _player) {
 }
 
 bool BattleUnit::applyDamage(int damage) {
-    currentHealth -= damage;
+    health -= damage;
 
-    if (currentHealth <= 0) {
+    if (health <= 0) {
         die();
         return true;
     }
@@ -40,5 +40,31 @@ bool BattleUnit::applyDamage(int damage) {
 }
 
 bool BattleUnit::attack(const std::shared_ptr<BattleUnit>& other_unit) {
-    return other_unit->applyDamage(strength);
+    Point startPoint = getCell()->getPoint();
+    Point endPoint = other_unit->getCell()->getPoint();
+    int dist = abs(startPoint.x - endPoint.x) + abs(startPoint.y - endPoint.y);
+
+    if (dist <= attackRange) {
+        // melee attack
+        return other_unit->applyDamage(damage);
+    }
+
+    return false;
+}
+
+bool RangeUnit::attack(const std::shared_ptr<BattleUnit>& other_unit) {
+    Point startPoint = getCell()->getPoint();
+    Point endPoint = other_unit->getCell()->getPoint();
+    int dist = abs(startPoint.x - endPoint.x) + abs(startPoint.y - endPoint.y);
+
+    if (dist <= 1) {
+        // melee attack
+        return other_unit->applyDamage(damage);
+    } else if (dist <= attackRange) {
+        // range attack
+        other_unit->applyDamage(damageRange);
+        return false;
+    }
+
+    return false;
 }

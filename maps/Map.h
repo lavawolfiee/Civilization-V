@@ -16,8 +16,6 @@ protected:
     size_t width, height;
     std::vector<std::vector<std::shared_ptr<Cell>>> field;
 
-    std::pair< size_t, size_t > selected;
-
 public:
     Map(size_t width, size_t height);
     std::vector<std::vector<std::shared_ptr<Cell>>>& getField() { return field; }
@@ -29,8 +27,6 @@ public:
     std::shared_ptr<Cell> getCell(Point p);
 
     std::pair< size_t, size_t > size() const;
-
-    void selectCell(size_t x, size_t y);
 };
 
 #endif //CIVILIZATION_V_MAP_H

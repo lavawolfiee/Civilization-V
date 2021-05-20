@@ -14,7 +14,7 @@ void Game::loop() {
     mapController->addUnit(10, 10, unit);
 
     ClassicalUnitFactory factory2;
-    std::shared_ptr<Unit> unit2 = factory2.createUnit(UnitFactory::UnitType::MELEE);
+    std::shared_ptr<Unit> unit2 = factory2.createUnit(UnitFactory::UnitType::RANGE);
     unit2->setPlayer(players.at(1));
     mapController->addUnit(20, 20, unit2);
 

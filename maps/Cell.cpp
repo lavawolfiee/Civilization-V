@@ -1,6 +1,6 @@
 #include "Cell.h"
 
-Cell::Cell(Cell::Type type): type(type), focused(false) {
+Cell::Cell(Cell::Type type, int x, int y): type(type), point(x, y) {
 
 }
 
@@ -53,15 +53,6 @@ Cell::Cell(const Cell &cell) {
     type = cell.type;
     building = cell.building;
     unit = cell.unit;
-    focused = cell.focused;
-}
-
-void Cell::focus() {
-    focused = true;
-}
-
-void Cell::unfocus() {
-    focused = false;
 }
 
 bool Cell::hasBuilding() const {
@@ -82,6 +73,10 @@ std::shared_ptr<Unit> Cell::getUnit() {
 
 void Cell::eraseUnit() {
     unit = nullptr;
+}
+
+const Point& Cell::getPoint() const {
+    return point;
 }
 
 Cell::~Cell() = default;

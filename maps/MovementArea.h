@@ -21,6 +21,7 @@ public:
     bool isIn(int x, int y) const;
 
     size_t size() const { return area.size(); };
+    void clear() { area.clear(); }
 };
 
 

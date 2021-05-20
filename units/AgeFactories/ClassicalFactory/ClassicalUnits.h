@@ -5,24 +5,24 @@
 
 class ClassicalRangeUnit: public RangeUnit {
 public:
-    ClassicalRangeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange, unsigned int strengthRange) :
-            RangeUnit(maxHealth, strength, movePoints, attackRange, strengthRange)
+    ClassicalRangeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange, unsigned int damageRange) :
+            RangeUnit(maxHealth, damage, movePoints, attackRange, damageRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class ClassicalMeleeUnit: public MeleeUnit {
 public:
-    ClassicalMeleeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            MeleeUnit(maxHealth, strength, movePoints, attackRange)
+    ClassicalMeleeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            MeleeUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class ClassicalCavalryUnit: public CavalryUnit {
 public:
-    ClassicalCavalryUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            CavalryUnit(maxHealth, strength, movePoints, attackRange)
+    ClassicalCavalryUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            CavalryUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };

@@ -42,6 +42,7 @@ void MapController::selectUnit(std::shared_ptr<Unit> unit) {
 
 void MapController::deselectUnit() {
     selectedUnit = nullptr;
+    selectedUnitArea.clear();
 }
 
 void MapController::render(std::shared_ptr<Batch> batch) {
@@ -50,9 +51,6 @@ void MapController::render(std::shared_ptr<Batch> batch) {
     std::shared_ptr<Batch> cellBatch = std::make_shared<Batch>(*batch);
     for (size_t i = 0; i < field.size(); ++i) {
         for (size_t j = 0; j < field.at(i).size(); ++j) {
-            //if(selected == std::make_pair(j, i))
-            //    field.at(i).at(j).focus();
-
             cellBatch->update(batch, j * (Cell::SIZE * sqrt(3) / 2.0) +
                                      (i % 2) * Cell::SIZE * sqrt(3) / 4.0,
                               i * Cell::SIZE * 3 / 4);
@@ -61,7 +59,6 @@ void MapController::render(std::shared_ptr<Batch> batch) {
                 field.at(i).at(j)->render(cellBatch, Cell::SELECTED);
             else
                 field.at(i).at(j)->render(cellBatch, Cell::NO_EFFECT);
-            //field.at(i).at(j)->unfocus();
         }
     }
 
@@ -136,6 +133,7 @@ bool MapController::attackUnit(const std::shared_ptr<Unit>& unit, const std::sha
 
 void MapController::setTurn(int _turn) {
     turn = _turn;
+    deselectUnit();
 }
 
 unsigned int MapController::movementCost(Point from, Point to) const {

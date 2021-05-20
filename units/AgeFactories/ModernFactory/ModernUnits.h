@@ -5,24 +5,24 @@
 
 class ModernRangeUnit: public RangeUnit {
 public:
-    ModernRangeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange, unsigned int strengthRange) :
-            RangeUnit(maxHealth, strength, movePoints, attackRange, strengthRange)
+    ModernRangeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange, unsigned int damageRange) :
+            RangeUnit(maxHealth, damage, movePoints, attackRange, damageRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class ModernMeleeUnit: public MeleeUnit {
 public:
-    ModernMeleeUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            MeleeUnit(maxHealth, strength, movePoints, attackRange)
+    ModernMeleeUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            MeleeUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
 
 class ModernCavalryUnit: public CavalryUnit {
 public:
-    ModernCavalryUnit(int maxHealth, unsigned int strength, unsigned int movePoints, unsigned int attackRange) :
-            CavalryUnit(maxHealth, strength, movePoints, attackRange)
+    ModernCavalryUnit(int maxHealth, unsigned int damage, unsigned int movePoints, unsigned int attackRange) :
+            CavalryUnit(maxHealth, damage, movePoints, attackRange)
     {};
     void render(std::shared_ptr<Batch> batch) override;
 };
