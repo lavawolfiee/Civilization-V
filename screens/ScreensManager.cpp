@@ -1,12 +1,5 @@
 #include "ScreensManager.h"
 
-/*std::shared_ptr<ScreensManager> ScreensManager::getInstance() {
-    if(!instance) {
-        instance = std::shared_ptr<ScreensManager>(new ScreensManager());
-    }
-    return instance;
-}*/
-
 ScreensManager& ScreensManager::getInstance() {
     static ScreensManager instance;
     return instance;
@@ -18,6 +11,7 @@ ScreensManager::ScreensManager() {
 }
 
 void ScreensManager::setScreen(std::shared_ptr<Screen> screen) {
+    gui->clear();
     this->currentScreen = std::move(screen);
     this->currentScreen->setGui(gui);
 }
@@ -39,6 +33,7 @@ void ScreensManager::setGUI(std::shared_ptr<GUI> gui) {
 
 void ScreensManager::Tick() {
     if(currentScreen) currentScreen->Tick(gui->delta());
+    gui->display();
 }
 
 void ScreensManager::onMousePressed(int x, int y) {

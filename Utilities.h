@@ -32,4 +32,6 @@ namespace std {
 
 unsigned int hexDistance(Point p1, Point p2);
 
+class Quit: public std::exception {};
+
 #endif //CIVILIZATION_V_UTILITIES_H

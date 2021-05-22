@@ -29,10 +29,8 @@ public:
 
     void Tick(unsigned long long delta) override;
 
-    void onMousePressed(int x, int y) override;
     void onMouseReleased(int x, int y) override;
     void onMouseMoved(int x, int y) override;
-    void onMouseClicked(int x, int y) override;
     void onMouseWheelScrolled(double scrollDelta) override;
 
 };

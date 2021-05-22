@@ -21,8 +21,6 @@ GameScreen::GameScreen(int playersCount) : mapX(0.0), mapY(0.0), zoom(0.0), turn
     mapController->addUnit(20, 20, unit2);
 }
 
-void GameScreen::onMousePressed(int x, int y) {}
-
 void GameScreen::onMouseReleased(int x, int y) {
     auto cellCoord = getMouseMapCoord();
     mapController->onCellClicked(cellCoord.first, cellCoord.second);
@@ -32,8 +30,6 @@ void GameScreen::onMouseMoved(int x, int y) {
     auto cellCoord = getMouseMapCoord();
     //mapController->selectCell(cellCoord.first, cellCoord.second);
 }
-
-void GameScreen::onMouseClicked(int x, int y) {}
 
 void GameScreen::onMouseWheelScrolled(double scrollDelta) {
     zoom += scrollDelta / 4;
@@ -85,5 +81,4 @@ void GameScreen::Tick(unsigned long long int delta) {
     double x = gui->width / 2 - mapX, y = gui->height / 2 - mapY;
     mapController->render(std::make_shared<Batch>(
             std::make_shared<Batch>(std::make_shared<BatchGUI>(gui, mapX, mapY), x, y, getMapScale()), -x, -y));
-    gui->display();
 }
