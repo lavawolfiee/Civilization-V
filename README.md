@@ -56,3 +56,4 @@ cmake .. && make -j9
 
 [Command](https://github.com/lavawolfiee/Civilization-V/blob/dev/gui/GUI.h#L43-L54)
 
+[Singleton](https://github.com/lavawolfiee/Civilization-V/blob/dev/screens/ScreensManager.h#L7)
