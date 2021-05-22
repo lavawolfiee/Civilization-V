@@ -28,6 +28,7 @@ public:
     virtual void display() = 0;
 
     virtual void clear(Color c = Color("black")) = 0;
+    virtual void removeAllWidgets() = 0;
 
     virtual bool isOpen() const = 0;
 

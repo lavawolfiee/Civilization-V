@@ -12,6 +12,8 @@ ScreensManager::ScreensManager() {
 
 void ScreensManager::setScreen(std::shared_ptr<Screen> screen) {
     gui->clear();
+    gui->removeAllWidgets();
+
     this->currentScreen = std::move(screen);
     this->currentScreen->setGui(gui);
 }

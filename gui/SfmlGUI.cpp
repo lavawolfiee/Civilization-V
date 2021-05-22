@@ -8,6 +8,9 @@ void SfmlGUI::display() {
 
 void SfmlGUI::clear(Color c) {
     window.clear(sf::Color(c.r, c.g, c.b, c.a));
+}
+
+void SfmlGUI::removeAllWidgets() {
     gui.removeAllWidgets();
 }
 

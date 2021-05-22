@@ -21,6 +21,7 @@ public:
     void display() override;
 
     void clear(Color c) override;
+    void removeAllWidgets() override;
 
     bool isOpen() const override;
 
