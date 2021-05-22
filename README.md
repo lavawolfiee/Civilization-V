@@ -43,11 +43,16 @@ cmake .. && make -j9
 ##  UML
 
 [Общая схема](https://app.creately.com/diagram/3FwxQh5iohh)
+
 [Схема AbstractFactory](...)
 
 ## Паттерны
 
 [AbstractFactory](https://github.com/lavawolfiee/Civilization-V/blob/dev/units/Factory.h#L10-L20)
+
 [Facade](https://github.com/lavawolfiee/Civilization-V/blob/dev/gui/GUI.h#L10)
+
 [Decorator](https://github.com/lavawolfiee/Civilization-V/blob/dev/gui/Batch.h#L7-L18)
+
 [Command](https://github.com/lavawolfiee/Civilization-V/blob/dev/gui/GUI.h#L43-L54)
+
