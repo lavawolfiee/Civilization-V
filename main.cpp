@@ -1,7 +1,5 @@
-#include "Game.h"
-#include "gui/SfmlGUI.h"
-#include "maps/StandardMapGenerator.h"
-#include "MapEditor.h"
+#include <screens/ScreensManager.h>
+#include <screens/GameScreen.h>
 
 
 #ifdef debug
@@ -14,15 +12,13 @@ int main(int argc, char* argv[]) {
 #ifdef debug
     cout << "[OK]. Ну че [CENSORED] рот - погнали [CENSORED]!" << std::endl;
 #endif
-    StandardMapGenerator mapGenerator;
 
-    std::shared_ptr<MapController> mapController = std::make_shared<MapController>();
-    mapController->setMap(mapGenerator.generateMap());
+    ScreensManager::getInstance().setScreen(std::make_shared<GameScreen>());
 
-    std::shared_ptr<Game> game = std::make_shared<Game>();
-    game->setGUI(std::make_shared<SfmlGUI>());
-    game->setMapController(mapController);
-    game->loop();
+    while(true) {
+        ScreensManager::getInstance().Tick();
+    }
+
     /*std::shared_ptr<MapEditor> editor = std::make_shared<MapEditor>();
     editor->setGUI(std::make_shared<SfmlGUI>());
     editor->loop();*/

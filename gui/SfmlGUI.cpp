@@ -59,7 +59,7 @@ bool SfmlGUI::isOpen() const {
 void SfmlGUI::pollEvents() {
     sf::Event event;
     while (window.pollEvent(event)) {
-        gui.handleEvent(event);
+        if(gui.handleEvent(event)) continue;
         switch (event.type) {
             case sf::Event::MouseButtonPressed:
                 if (event.mouseButton.button == sf::Mouse::Left) {

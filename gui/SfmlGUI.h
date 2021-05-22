@@ -4,7 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <TGUI/TGUI.hpp>
 #include "GUI.h"
-#include "../Game.h"
+#include <cmath>
 
 class SfmlGUI : public GUI {
 private:
